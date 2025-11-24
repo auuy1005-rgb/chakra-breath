@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>脈輪呼吸冥想｜Chakra Breath</title>
+  <title>脈輪呼吸冥想｜有聲提示版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
@@ -63,7 +63,7 @@
       gap: 12px;
     }
 
-    /* 人形 ＋ 脈輪圖 */
+    /* 人形 ＋ 脈輪 */
     .figure-card {
       border-radius: 18px;
       border: 1px solid #1f2937;
@@ -89,14 +89,6 @@
       width: 180px;
       height: 230px;
       filter: drop-shadow(0 10px 14px rgba(15,23,42,0.9));
-    }
-
-    .hf-core {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .hf-body {
@@ -412,10 +404,10 @@
   <div class="app">
     <div class="title">
       <span class="emoji">🌀</span>
-      <span>脈輪呼吸冥想小工具</span>
+      <span>脈輪呼吸冥想｜有聲提示版</span>
     </div>
     <div class="subtitle">
-      從海底輪一路往上，每個脈輪跟著呼吸 5 輪。選一種呼吸方案後按開始，其他交給節奏帶你走。
+      從海底輪一路往上，每個脈輪跟著呼吸 5 輪。按「開始」後會有聲音提示吸氣／停留／吐氣，不用睜眼看畫面。
     </div>
 
     <div class="top-layout">
@@ -441,7 +433,7 @@
             <div class="hf-body"></div>
             <div class="hf-legs"></div>
             <div class="hf-arms"></div>
-            <!-- 脈輪點將由 JS 填入 -->
+            <!-- 脈輪點由 JS 動態加入 -->
           </div>
         </div>
 
@@ -497,7 +489,7 @@
   </div>
 
   <script>
-    // ---- 脈輪資料（含在人形上的位置百分比）----
+    // ---- 脈輪資料 ----
     const chakras = [
       {
         id: 'root',
@@ -591,6 +583,46 @@
     const pauseBtn = document.getElementById('pauseBtn');
     const resetBtn = document.getElementById('resetBtn');
 
+    // ---- Web Audio：聲音提示 ----
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        audioCtx = new AC();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playBeep(freq, duration = 0.25, volume = 0.25) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.value = volume;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.start(now);
+      osc.stop(now + duration);
+    }
+
+    function playPhaseCue(phase) {
+      // 吸氣：中音、停留：高音、吐氣：低音
+      if (!audioCtx) return;
+      if (phase === PHASES.INHALE) {
+        playBeep(440, 0.3, 0.28);
+      } else if (phase === PHASES.HOLD) {
+        playBeep(660, 0.25, 0.24);
+      } else if (phase === PHASES.EXHALE) {
+        playBeep(330, 0.35, 0.26);
+      }
+    }
+
     // ---- 狀態 ----
     let currentSchemeId = 'A';
     let inhaleSeconds = SCHEMES[currentSchemeId].inhale;
@@ -627,7 +659,7 @@
         dot.dataset.index = index.toString();
 
         dot.addEventListener('click', () => {
-          if (isRunning) return; // 避免中途亂跳
+          if (isRunning) return;
           currentChakraIndex = index;
           cycleCountWithinChakra = 0;
           updateChakraInfo();
@@ -666,7 +698,7 @@
       exhaleSeconds = scheme.exhale;
 
       totalSeconds = calcTotalSeconds();
-      resetSession(false); // 不清除方案，但重來
+      resetSession(false);
       updateSchemeButtons();
     }
 
@@ -687,6 +719,8 @@
     function startSession() {
       if (isRunning) return;
 
+      initAudio(); // 第一次按開始時啟用聲音
+
       if (hasFinished) {
         resetSession(false);
       }
@@ -696,16 +730,13 @@
       if (!timer) {
         currentPhase = PHASES.INHALE;
         phaseRemaining = inhaleSeconds;
+        updatePhaseUI(); // 一開始就播第一個提示音
       }
 
-      updatePhaseUI();
-
       timer = setInterval(() => {
-        // 每秒更新
         if (phaseRemaining <= 0) {
           const switched = switchPhaseOrChakra();
           if (!switched) {
-            // 全部完成
             finishSession();
             return;
           }
@@ -787,7 +818,6 @@
       }
     }
 
-    // 在每次 EXHALE 結束時判斷要不要換脈輪／結束
     function switchPhaseOrChakra() {
       if (currentPhase === PHASES.INHALE) {
         if (holdSeconds > 0) {
@@ -801,18 +831,15 @@
         currentPhase = PHASES.EXHALE;
         phaseRemaining = exhaleSeconds;
       } else if (currentPhase === PHASES.EXHALE) {
-        // 單一完成呼吸循環
         cycleCountWithinChakra += 1;
 
         if (cycleCountWithinChakra >= cyclesPerChakra) {
-          // 換脈輪
           cycleCountWithinChakra = 0;
           if (currentChakraIndex < chakras.length - 1) {
             currentChakraIndex += 1;
             updateChakraInfo();
             updateActiveChakraDot();
           } else {
-            // 所有脈輪完成
             return false;
           }
         }
@@ -845,6 +872,7 @@
 
       updateTimerText();
       updateProgressText();
+      playPhaseCue(currentPhase); // 每換階段播一次提示音
     }
 
     function updateTimerText() {
@@ -853,7 +881,6 @@
 
     function updateProgressText() {
       const chakra = chakras[currentChakraIndex];
-      const finishedChakras = currentChakraIndex;
       const totalChakras = chakras.length;
 
       if (hasFinished) {
