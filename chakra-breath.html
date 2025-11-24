@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>脈輪呼吸冥想小工具</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #38bdf8;
+      --text-main: #e5e7eb;
+      --text-sub: #9ca3af;
+      --border-soft: #1f2933;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      background: linear-gradient(145deg, #020617aa, #020617ee);
+      border-radius: 20px;
+      padding: 18px 16px 20px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      border: 1px solid #1f2937;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .title span.emoji {
+      font-size: 22px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+    }
+
+    .chakra-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .chakra-btn {
+      flex: 1 1 calc(33.33% - 8px);
+      min-width: 90px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      color: var(--text-sub);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease-out;
+    }
+
+    .chakra-btn:hover {
+      border-color: #4b5563;
+    }
+
+    .chakra-btn.active {
+      color: #f9fafb;
+      border-color: var(--accent);
+      background: radial-gradient(circle at top, #0ea5e9 0, #020617 60%);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.35);
+    }
+
+    .chakra-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255,255,255,0.45);
+    }
+
+    .chakra-info-card {
+      margin-bottom: 18px;
+      padding: 10px 10px 8px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.85);
+      border: 1px solid #1f2937;
+    }
+
+    .chakra-info-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chakra-info-chip {
+      font-size: 11px;
+      color: #a5b4fc;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #4f46e5;
+      background: rgba(30,64,175,0.3);
+    }
+
+    .chakra-info-text {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    .chakra-info-text span.label {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .breath-card {
+      margin-bottom: 16px;
+      padding: 12px 12px 14px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, #0b1120, #020617);
+      border: 1px solid #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .breath-circle-wrapper {
+      width: 160px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .breath-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #020617 0, #020617 40%, #020617 70%);
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 0 18px rgba(148,163,184,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e5e7eb;
+      font-size: 12px;
+      text-align: center;
+      padding: 8px;
+      transition: transform 0.8s ease-in-out, box-shadow 0.8s ease-in-out, border-color 0.3s ease-out;
+    }
+
+    .breath-circle.inhale {
+      transform: scale(1.25);
+      box-shadow: 0 0 28px rgba(34,197,94,0.7);
+      border-color: rgba(34,197,94,0.9);
+    }
+
+    .breath-circle.hold {
+      transform: scale(1.05);
+      box-shadow: 0 0 22px rgba(56,189,248,0.7);
+      border-color: rgba(56,189,248,0.9);
+    }
+
+    .breath-circle.exhale {
+      transform: scale(0.85);
+      box-shadow: 0 0 24px rgba(248,113,113,0.7);
+      border-color: rgba(248,113,113,0.9);
+    }
+
+    .breath-status {
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .breath-status-main {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .breath-status-sub {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .breath-counts {
+      display: flex;
+      gap: 6px;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .breath-counts span {
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: rgba(15,23,42,0.8);
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: var(--text-main);
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease-out;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #22c55e);
+      color: #0f172a;
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+    }
+
+    .btn-secondary {
+      color: #e5e7eb;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    .hint strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .footer {
+      margin-top: 6px;
+      font-size: 10px;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    .preset-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 6px;
+    }
+
+    .preset-label {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    .preset-select {
+      flex: 1;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="title">
+      <span class="emoji">🌀</span>
+      <span>脈輪呼吸冥想タイマー</span>
+    </div>
+    <div class="subtitle">
+      選一個脈輪，專心跟著呼吸節奏。一輪大約 14 秒，慢慢循環就好。
+    </div>
+
+    <!-- 脈輪選擇 -->
+    <div class="chakra-selector" id="chakraSelector">
+      <!-- 按鈕由 JS 填入 -->
+    </div>
+
+    <!-- 脈輪資訊 -->
+    <div class="chakra-info-card">
+      <div class="chakra-info-title">
+        <span id="chakraName">海底輪｜Root</span>
+        <span class="chakra-info-chip" id="chakraKey">安全感・根基</span>
+      </div>
+      <div class="chakra-info-text">
+        <div><span class="label">位置：</span><span id="chakraArea">尾椎、骨盆底部</span></div>
+        <div><span class="label">練習重點：</span><span id="chakraHint">感受身體重量，讓呼吸穩穩落在骨盆與雙腳。</span></div>
+      </div>
+    </div>
+
+    <!-- 呼吸卡片 -->
+    <div class="breath-card">
+      <div class="preset-row">
+        <span class="preset-label">呼吸節奏：</span>
+        <select id="presetSelect" class="preset-select">
+          <option value="4-4-6">溫和版｜吸4・停4・吐6</option>
+          <option value="4-0-6">流動版｜吸4・不停・吐6</option>
+          <option value="5-5-7">深層版｜吸5・停5・吐7</option>
+        </select>
+      </div>
+
+      <div class="breath-circle-wrapper">
+        <div class="breath-circle" id="breathCircle">
+          跟著提示<br>緩慢呼吸
+        </div>
+      </div>
+
+      <div class="breath-status">
+        <div class="breath-status-main" id="phaseText">待機中</div>
+        <div class="breath-status-sub" id="timerText">按下開始，從第一口吸氣開始。</div>
+        <div class="breath-counts" id="breathCounts">
+          <!-- 由 JS 填入 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 控制按鈕 -->
+    <div class="controls">
+      <button class="btn btn-primary" id="startBtn">
+        ▶️ 開始
+      </button>
+      <button class="btn btn-secondary" id="pauseBtn">
+        ⏸ 暫停
+      </button>
+      <button class="btn btn-secondary" id="resetBtn">
+        🔄 重置
+      </button>
+    </div>
+
+    <div class="hint">
+      建議：<strong>眼睛微閉</strong>，注意力放在選定的脈輪位置。  
+      不用追求完美配速，<strong>以身體舒服為主</strong>，覺得累就停。
+    </div>
+
+    <div class="footer">
+      個人練習用小工具，不能替代任何醫療建議。如有身體不適，請先停止練習。
+    </div>
+  </div>
+
+  <script>
+    // --- 脈輪資料 ---
+    const chakras = [
+      {
+        id: 'root',
+        name: '海底輪｜Root',
+        color: '#ef4444',
+        area: '尾椎、骨盆底部、雙腳',
+        key: '安全感・根基',
+        hint: '感受身體重量，呼氣時讓緊繃慢慢沉到地面。'
+      },
+      {
+        id: 'sacral',
+        name: '臍輪｜Sacral',
+        color: '#f97316',
+        area: '肚臍下方、小腹',
+        key: '感受・慾望',
+        hint: '吸氣時覺得小腹像氣球微微鼓起，吐氣時自然回收。'
+      },
+      {
+        id: 'solar',
+        name: '太陽神經叢｜Solar Plexus',
+        color: '#eab308',
+        area: '肋骨中間、胃部附近',
+        key: '行動・界線',
+        hint: '吸氣時感覺胸口前方漲滿，吐氣時讓壓力慢慢散開。'
+      },
+      {
+        id: 'heart',
+        name: '心輪｜Heart',
+        color: '#22c55e',
+        area: '胸口中央、肩膀',
+        key: '連結・包容',
+        hint: '注意胸口的起伏，吸氣時胸腔展開，吐氣時肩膀放鬆。'
+      },
+      {
+        id: 'throat',
+        name: '喉輪｜Throat',
+        color: '#0ea5e9',
+        area: '喉嚨、頸部',
+        key: '表達・真實',
+        hint: '讓呼吸經過喉嚨時保持順暢，觀察吞嚥與微微震動。'
+      },
+      {
+        id: 'third-eye',
+        name: '眉心輪｜Third Eye',
+        color: '#6366f1',
+        area: '兩眉之間、眼周',
+        key: '專注・洞察',
+        hint: '輕鬆感受兩眉之間的區域，讓呼吸帶來清明的感覺。'
+      },
+      {
+        id: 'crown',
+        name: '頂輪｜Crown',
+        color: '#a855f7',
+        area: '頭頂、頭皮',
+        key: '連結・覺察',
+        hint: '想像呼吸在頭頂上方形成一個寬廣的空間，意識輕輕停在那裡。'
+      }
+    ];
+
+    // --- DOM 元素 ---
+    const chakraSelectorEl = document.getElementById('chakraSelector');
+    const chakraNameEl = document.getElementById('chakraName');
+    const chakraAreaEl = document.getElementById('chakraArea');
+    const chakraKeyEl = document.getElementById('chakraKey');
+    const chakraHintEl = document.getElementById('chakraHint');
+
+    const breathCircleEl = document.getElementById('breathCircle');
+    const phaseTextEl = document.getElementById('phaseText');
+    const timerTextEl = document.getElementById('timerText');
+    const breathCountsEl = document.getElementById('breathCounts');
+
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const presetSelect = document.getElementById('presetSelect');
+
+    // --- 狀態 ---
+    let currentChakraId = 'root';
+    let inhaleSeconds = 4;
+    let holdSeconds = 4;
+    let exhaleSeconds = 6;
+
+    const PHASES = {
+      INHALE: 'INHALE',
+      HOLD: 'HOLD',
+      EXHALE: 'EXHALE'
+    };
+
+    let isRunning = false;
+    let timer = null;
+    let currentPhase = PHASES.INHALE;
+    let phaseRemaining = inhaleSeconds;
+    let totalCycleSeconds = inhaleSeconds + holdSeconds + exhaleSeconds;
+    let cycleCount = 0;
+
+    // --- 初始化脈輪按鈕 ---
+    function renderChakraButtons() {
+      chakraSelectorEl.innerHTML = '';
+      chakras.forEach(chakra => {
+        const btn = document.createElement('button');
+        btn.className = 'chakra-btn' + (chakra.id === currentChakraId ? ' active' : '');
+        btn.dataset.id = chakra.id;
+
+        const dot = document.createElement('span');
+        dot.className = 'chakra-color-dot';
+        dot.style.background = chakra.color;
+
+        const label = document.createElement('span');
+        label.textContent = chakra.name.split('｜')[0]; // 只顯示中文名
+
+        btn.appendChild(dot);
+        btn.appendChild(label);
+
+        btn.addEventListener('click', () => {
+          currentChakraId = chakra.id;
+          updateChakraInfo();
+          setActiveButton(chakra.id);
+        });
+
+        chakraSelectorEl.appendChild(btn);
+      });
+    }
+
+    function setActiveButton(id) {
+      const buttons = chakraSelectorEl.querySelectorAll('.chakra-btn');
+      buttons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.id === id);
+      });
+    }
+
+    // --- 更新脈輪資訊 ---
+    function updateChakraInfo() {
+      const chakra = chakras.find(c => c.id === currentChakraId);
+      if (!chakra) return;
+      chakraNameEl.textContent = chakra.name;
+      chakraAreaEl.textContent = chakra.area;
+      chakraKeyEl.textContent = chakra.key;
+      chakraHintEl.textContent = chakra.hint;
+
+      // 更新呼吸圈邊框顏色微調
+      breathCircleEl.style.borderColor = chakra.color;
+      breathCircleEl.style.boxShadow = `0 0 18px ${chakra.color}77`;
+    }
+
+    // --- 更新節奏顯示 ---
+    function renderBreathCounts() {
+      breathCountsEl.innerHTML = '';
+      const span1 = document.createElement('span');
+      span1.textContent = `吸 ${inhaleSeconds}s`;
+      const span2 = document.createElement('span');
+      if (holdSeconds > 0) {
+        span2.textContent = `停 ${holdSeconds}s`;
+      } else {
+        span2.textContent = `中途不停`;
+      }
+      const span3 = document.createElement('span');
+      span3.textContent = `吐 ${exhaleSeconds}s`;
+
+      breathCountsEl.appendChild(span1);
+      breathCountsEl.appendChild(span2);
+      breathCountsEl.appendChild(span3);
+    }
+
+    // --- 解析 preset ---
+    function applyPreset(value) {
+      // 格式類似 "4-4-6"
+      const [i, h, e] = value.split('-').map(v => parseInt(v, 10));
+      inhaleSeconds = i || 4;
+      holdSeconds = h || 0;
+      exhaleSeconds = e || 6;
+      totalCycleSeconds = inhaleSeconds + holdSeconds + exhaleSeconds;
+
+      resetSession(false); // 只重置計時，不清空脈輪
+      renderBreathCounts();
+    }
+
+    // --- 呼吸流程 ---
+    function startSession() {
+      if (isRunning) return;
+      isRunning = true;
+      startBtn.disabled = true;
+
+      if (!timer) {
+        // 初次或重置後，從頭開始
+        currentPhase = PHASES.INHALE;
+        phaseRemaining = inhaleSeconds;
+      }
+
+      updatePhaseUI();
+
+      timer = setInterval(() => {
+        if (phaseRemaining <= 0) {
+          switchPhase();
+        } else {
+          phaseRemaining -= 1;
+          updateTimerText();
+        }
+      }, 1000);
+    }
+
+    function pauseSession() {
+      isRunning = false;
+      startBtn.disabled = false;
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+      phaseTextEl.textContent = '已暫停';
+      timerTextEl.textContent = '隨時可以再按開始，延續剛才的節奏。';
+      breathCircleEl.classList.remove('inhale', 'hold', 'exhale');
+    }
+
+    function resetSession(clearChakra = false) {
+      isRunning = false;
+      startBtn.disabled = false;
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+      currentPhase = PHASES.INHALE;
+      phaseRemaining = inhaleSeconds;
+      cycleCount = 0;
+      phaseTextEl.textContent = '待機中';
+      timerTextEl.textContent = '按下開始，從第一口吸氣開始。';
+      breathCircleEl.classList.remove('inhale', 'hold', 'exhale');
+      breathCircleEl.textContent = '跟著提示\n緩慢呼吸';
+
+      if (clearChakra) {
+        currentChakraId = 'root';
+        setActiveButton('root');
+        updateChakraInfo();
+      }
+    }
+
+    function switchPhase() {
+      if (currentPhase === PHASES.INHALE) {
+        if (holdSeconds > 0) {
+          currentPhase = PHASES.HOLD;
+          phaseRemaining = holdSeconds;
+        } else {
+          currentPhase = PHASES.EXHALE;
+          phaseRemaining = exhaleSeconds;
+        }
+      } else if (currentPhase === PHASES.HOLD) {
+        currentPhase = PHASES.EXHALE;
+        phaseRemaining = exhaleSeconds;
+      } else if (currentPhase === PHASES.EXHALE) {
+        currentPhase = PHASES.INHALE;
+        phaseRemaining = inhaleSeconds;
+        cycleCount += 1;
+      }
+      updatePhaseUI();
+    }
+
+    function updatePhaseUI() {
+      breathCircleEl.classList.remove('inhale', 'hold', 'exhale');
+
+      if (currentPhase === PHASES.INHALE) {
+        phaseTextEl.textContent = '吸氣';
+        breathCircleEl.classList.add('inhale');
+        breathCircleEl.textContent = '鼻子吸氣\n緩慢吸滿';
+      } else if (currentPhase === PHASES.HOLD) {
+        phaseTextEl.textContent = '停留';
+        breathCircleEl.classList.add('hold');
+        breathCircleEl.textContent = '保持不動\n注意感受';
+      } else if (currentPhase === PHASES.EXHALE) {
+        phaseTextEl.textContent = '吐氣';
+        breathCircleEl.classList.add('exhale');
+        breathCircleEl.textContent = '嘴巴吐氣\n慢慢放掉';
+      }
+
+      updateTimerText();
+    }
+
+    function updateTimerText() {
+      timerTextEl.textContent = `本階段剩餘 ${phaseRemaining} 秒｜已完成約 ${cycleCount} 輪`;
+    }
+
+    // --- 事件綁定 ---
+    startBtn.addEventListener('click', startSession);
+    pauseBtn.addEventListener('click', pauseSession);
+    resetBtn.addEventListener('click', () => resetSession(false));
+    presetSelect.addEventListener('change', (e) => {
+      applyPreset(e.target.value);
+    });
+
+    // --- 初始化 ---
+    function init() {
+      renderChakraButtons();
+      updateChakraInfo();
+      renderBreathCounts();
+      applyPreset(presetSelect.value);
+    }
+
+    init();
+  </script>
+</body>
+</html>
