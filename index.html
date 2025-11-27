@@ -159,6 +159,12 @@
     font-size: 1rem;
 }
 
+#nextBtn {
+    padding: 0.7rem 2.2rem; /* 上下、左右內距 */
+    font-size: 1rem;
+    min-width: 200px;      /* ★★★ 這行就是加寬按鈕的關鍵 ★★★ */
+    text-align: center;
+}
 
     </style>
   </head>
@@ -183,7 +189,7 @@
 
   <!-- ⭐⭐⭐ 把星星移到這裡 ⭐⭐⭐ -->
   <div class="card-stars" style="margin-top: 0.6rem;">
-    難度（星星越多越常出現）：
+    難度：
     <span class="star" data-star="1">★</span>
     <span class="star" data-star="2">★</span>
     <span class="star" data-star="3">★</span>
@@ -1871,4 +1877,5 @@
     </script>
   </body>
 </html>
+
 
