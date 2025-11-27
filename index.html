@@ -34,7 +34,7 @@
         padding: 0 1rem 2rem;
       }
 
-      .controls {
+.controls {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
@@ -57,13 +57,13 @@
       }
 
       .card-lesson {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         color: #666;
       }
 
       .card-type {
         font-size: 0.8rem;
-        color: #666;
+        color: #999;
         margin-bottom: 0.5rem;
       }
 
@@ -146,6 +146,20 @@
           font-size: 1.4rem;
         }
       }
+/* --- 重設按鈕固定在右下角（白卡外） --- */
+.reset-fixed {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+}
+
+.reset-fixed button {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+}
+
+
     </style>
   </head>
   <body>
@@ -165,11 +179,11 @@
   </label>
 
   <button id="nextBtn">抽下一張卡片 🎴</button>
-  <button id="resetCycleBtn">重設學習循環</button>
+ 
 
   <!-- ⭐⭐⭐ 把星星移到這裡 ⭐⭐⭐ -->
   <div class="card-stars" style="margin-top: 0.6rem;">
-    難度：
+    難度（星星越多越常出現）：
     <span class="star" data-star="1">★</span>
     <span class="star" data-star="2">★</span>
     <span class="star" data-star="3">★</span>
@@ -185,6 +199,10 @@
   <div class="card-romaji" id="cardRomaji"></div>
   <div class="card-zh" id="cardZh"></div>
   <div class="card-note" id="cardNote"></div>
+
+<div class="reset-fixed">
+    <button id="resetCycleBtn">重設學習循環</button>
+</div>
 
   <div class="card-actions">
     <button id="audioBtn">🔊 發音</button>
@@ -1853,6 +1871,4 @@
     </script>
   </body>
 </html>
-
-
 
