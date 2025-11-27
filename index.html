@@ -200,126 +200,1180 @@
       // 要新增第2課、第3課，只要照著複製一份改內容就好
       // 每張卡片不用自己給 id，系統會自動幫你編
 
-      const lessons = [
-        {
-          lessonId: 1,
-          title: "第1課｜なにをしていますか",
-          cards: [
-            {
-              type: "sentence",
-              jp: "なにをしているの？",
-              kana: "なにをしているの？",
-              romaji: "Nani o shite iru no?",
-              zh: "你在做什麼？",
-              note: "口語形，跟朋友用",
-              audioText: "なにをしているの？"
-            },
-            {
-              type: "sentence",
-              jp: "なにをしていますか？",
-              kana: "なにをしていますか？",
-              romaji: "Nani o shite imasu ka?",
-              zh: "您在做什麼？（較客氣）",
-              note: "敬語版本",
-              audioText: "なにをしていますか？"
-            },
-            {
-              type: "word",
-              jp: "朝食",
-              kana: "ちょうしょく",
-              romaji: "choushoku",
-              zh: "早餐",
-              note: "",
-              audioText: "ちょうしょく"
-            },
-            {
-              type: "sentence",
-              jp: "朝食(ちょうしょく)を食べています。",
-              kana: "ちょうしょくをたべています。",
-              romaji: "Choushoku o tabete imasu.",
-              zh: "我正在吃早餐。",
-              note: "",
-              audioText: "朝食を食べています。"
-            },
-            {
-              type: "sentence",
-              jp: "本(ほん)を読(よ)んでいます。",
-              kana: "ほんをよんでいます。",
-              romaji: "Hon o yonde imasu.",
-              zh: "正在看書。",
-              note: "",
-              audioText: "本を読んでいます。"
-            },
-            {
-              type: "sentence",
-              jp: "水(みず)を飲(の)んでいます。",
-              kana: "みずをのんでいます。",
-              romaji: "Mizu o nonde imasu.",
-              zh: "正在喝水。",
-              note: "",
-              audioText: "水を飲んでいます。"
-            },
-            {
-              type: "sentence",
-              jp: "犬(いぬ)と遊(あそ)んでいます。",
-              kana: "いぬとあそんでいます。",
-              romaji: "Inu to asonde imasu.",
-              zh: "正在陪狗玩。",
-              note: "",
-              audioText: "犬と遊んでいます。"
-            }
-          ]
-        }
-       ,{  lessonId: 2,
-  title: "第2課｜なにをしていますか（たべています）",
-  cards: [
-    {
-      type: "sentence",
-      jp: "朝食(あさごはん)を食(た)べています。",
-      kana: "あさごはんをたべています。",
-      romaji: "Asagohan o tabete imasu.",
-      zh: "我正在吃早餐。",
-      note: "",
-      audioText: "朝食を食べています。"
-    },
-    {
-      type: "sentence",
-      jp: "バナナを食(た)べています。",
-      kana: "ばななをたべています。",
-      romaji: "Banana o tabete imasu.",
-      zh: "正在吃香蕉。",
-      note: "",
-      audioText: "バナナを食べています。"
-    },
-    {
-      type: "sentence",
-      jp: "昼食(ちゅうしょく)を食(た)べています。",
-      kana: "ちゅうしょくをたべています。",
-      romaji: "Chuushoku o tabete imasu.",
-      zh: "正在吃午餐。",
-      note: "",
-      audioText: "昼食を食べています。"
-    },
-    {
-      type: "sentence",
-      jp: "野菜(やさい)を食(た)べています。",
-      kana: "やさいをたべています。",
-      romaji: "Yasai o tabete imasu.",
-      zh: "正在吃蔬菜。",
-      note: "",
-      audioText: "野菜を食べています。"
-    },
-    {
-      type: "sentence",
-      jp: "りんごを食(た)べています。",
-      kana: "りんごをたべています。",
-      romaji: "Ringo o tabete imasu.",
-      zh: "正在吃蘋果。",
-      note: "",
-      audioText: "りんごを食べています。"
-    }
-  ]
-}
+    const lessons = [
+  {
+    lessonId: 1,
+    title: "第1課｜なにをしていますか（正在做什麼）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "なにをしているの？",
+        kana: "なにをしているの？",
+        romaji: "Nani o shite iru no?",
+        zh: "你在做什麼？",
+        note: "口語形，跟朋友用",
+        audioText: "なにをしているの？"
+      },
+      {
+        type: "sentence",
+        jp: "なにをしていますか？",
+        kana: "なにをしていますか？",
+        romaji: "Nani o shite imasu ka?",
+        zh: "您在做什麼？（較客氣）",
+        note: "敬語版本",
+        audioText: "なにをしていますか？"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "本(ほん)を読(よ)んでいます。",
+        kana: "ほんをよんでいます。",
+        romaji: "Hon o yonde imasu.",
+        zh: "正在看書。",
+        note: "",
+        audioText: "本を読んでいます。"
+      },
+      {
+        type: "sentence",
+        jp: "水(みず)を飲(の)んでいます。",
+        kana: "みずをのんでいます。",
+        romaji: "Mizu o nonde imasu.",
+        zh: "正在喝水。",
+        note: "",
+        audioText: "水を飲んでいます。"
+      },
+      {
+        type: "sentence",
+        jp: "犬(いぬ)と遊(あそ)んでいます。",
+        kana: "いぬとあそんでいます。",
+        romaji: "Inu to asonde imasu.",
+        zh: "正在陪狗玩。",
+        note: "",
+        audioText: "犬と遊んでいます。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "本",
+        kana: "ほん",
+        romaji: "hon",
+        zh: "書、本子",
+        note: "",
+        audioText: "ほん"
+      },
+      {
+        type: "word",
+        jp: "読む",
+        kana: "よむ",
+        romaji: "yomu",
+        zh: "閱讀",
+        note: "",
+        audioText: "よむ"
+      },
+      {
+        type: "word",
+        jp: "水",
+        kana: "みず",
+        romaji: "mizu",
+        zh: "水",
+        note: "",
+        audioText: "みず"
+      },
+      {
+        type: "word",
+        jp: "飲む",
+        kana: "のむ",
+        romaji: "nomu",
+        zh: "喝",
+        note: "",
+        audioText: "のむ"
+      },
+      {
+        type: "word",
+        jp: "犬",
+        kana: "いぬ",
+        romaji: "inu",
+        zh: "狗",
+        note: "",
+        audioText: "いぬ"
+      },
+      {
+        type: "word",
+        jp: "遊ぶ",
+        kana: "あそぶ",
+        romaji: "asobu",
+        zh: "玩、嬉戲",
+        note: "",
+        audioText: "あそぶ"
+      }
+    ]
+  },
+
+  {
+    lessonId: 2,
+    title: "第2課｜「我正在～」句型練習",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "朝食(あさごはん)を食(た)べています。",
+        kana: "あさごはんをたべています。",
+        romaji: "Asagohan o tabete imasu.",
+        zh: "我正在吃早餐。",
+        note: "",
+        audioText: "朝食を食べています。"
+      },
+      {
+        type: "sentence",
+        jp: "バナナを食(た)べています。",
+        kana: "ばななをたべています。",
+        romaji: "Banana o tabete imasu.",
+        zh: "正在吃香蕉。",
+        note: "",
+        audioText: "バナナを食べています。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "昼食(ちゅうしょく)を食(た)べています。",
+        kana: "ちゅうしょくをたべています。",
+        romaji: "Chuushoku o tabete imasu.",
+        zh: "正在吃午餐。",
+        note: "",
+        audioText: "昼食を食べています。"
+      },
+      {
+        type: "sentence",
+        jp: "野菜(やさい)を食(た)べています。",
+        kana: "やさいをたべています。",
+        romaji: "Yasai o tabete imasu.",
+        zh: "正在吃蔬菜。",
+        note: "",
+        audioText: "野菜を食べています。"
+      },
+      {
+        type: "sentence",
+        jp: "りんごを食(た)べています。",
+        kana: "りんごをたべています。",
+        romaji: "Ringo o tabete imasu.",
+        zh: "正在吃蘋果。",
+        note: "",
+        audioText: "りんごを食べています。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "昼食",
+        kana: "ちゅうしょく",
+        romaji: "chuushoku",
+        zh: "午餐",
+        note: "",
+        audioText: "ちゅうしょく"
+      },
+      {
+        type: "word",
+        jp: "野菜",
+        kana: "やさい",
+        romaji: "yasai",
+        zh: "蔬菜",
+        note: "",
+        audioText: "やさい"
+      },
+      {
+        type: "word",
+        jp: "食べる",
+        kana: "たべる",
+        romaji: "taberu",
+        zh: "吃",
+        note: "",
+        audioText: "たべる"
+      },
+      {
+        type: "word",
+        jp: "りんご",
+        kana: "りんご",
+        romaji: "ringo",
+        zh: "蘋果",
+        note: "",
+        audioText: "りんご"
+      }
+    ]
+  },
+
+  {
+    lessonId: 3,
+    title: "第3課｜これはなんですか（這是什麼）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "これはなんだ。",
+        kana: "これはなんだ。",
+        romaji: "Kore wa nan da.",
+        zh: "這是什麼。（口語）",
+        note: "",
+        audioText: "これはなんだ。"
+      },
+      {
+        type: "sentence",
+        jp: "これはなんですか。",
+        kana: "これはなんですか。",
+        romaji: "Kore wa nan desu ka.",
+        zh: "請問這是什麼？",
+        note: "",
+        audioText: "これはなんですか。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "これはりんごです。",
+        kana: "これはりんごです。",
+        romaji: "Kore wa ringo desu.",
+        zh: "這是蘋果。",
+        note: "",
+        audioText: "これはりんごです。"
+      },
+      {
+        type: "sentence",
+        jp: "これは水(みず)です。",
+        kana: "これはみずです。",
+        romaji: "Kore wa mizu desu.",
+        zh: "這是水。",
+        note: "",
+        audioText: "これは水です。"
+      },
+      {
+        type: "sentence",
+        jp: "これはかばんです。",
+        kana: "これはかばんです。",
+        romaji: "Kore wa kaban desu.",
+        zh: "這是包包。",
+        note: "",
+        audioText: "これはかばんです。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "りんご",
+        kana: "りんご",
+        romaji: "ringo",
+        zh: "蘋果",
+        note: "",
+        audioText: "りんご"
+      },
+      {
+        type: "word",
+        jp: "水",
+        kana: "みず",
+        romaji: "mizu",
+        zh: "水",
+        note: "",
+        audioText: "みず"
+      },
+      {
+        type: "word",
+        jp: "かばん",
+        kana: "かばん",
+        romaji: "kaban",
+        zh: "包包",
+        note: "",
+        audioText: "かばん"
+      }
+    ]
+  },
+
+  {
+    lessonId: 4,
+    title: "第4課｜どこですか（在哪裡）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "どこですか？",
+        kana: "どこですか？",
+        romaji: "Doko desu ka?",
+        zh: "在哪裡？",
+        note: "",
+        audioText: "どこですか？"
+      },
+      {
+        type: "sentence",
+        jp: "どこ？",
+        kana: "どこ？",
+        romaji: "Doko?",
+        zh: "哪裡？（口語）",
+        note: "",
+        audioText: "どこ？"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "レストランはどこですか。",
+        kana: "れすとらんはどこですか。",
+        romaji: "Resutoran wa doko desu ka.",
+        zh: "餐廳在哪裡？",
+        note: "",
+        audioText: "レストランはどこですか。"
+      },
+      {
+        type: "sentence",
+        jp: "バス停(てい)はどこですか。",
+        kana: "ばすていはどこですか。",
+        romaji: "Basutei wa doko desu ka.",
+        zh: "公車站在哪裡？",
+        note: "",
+        audioText: "バス停はどこですか。"
+      },
+      {
+        type: "sentence",
+        jp: "出口(でぐち)はどこですか。",
+        kana: "でぐちはどこですか。",
+        romaji: "Deguchi wa doko desu ka.",
+        zh: "出口在哪裡？",
+        note: "",
+        audioText: "出口はどこですか。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "レストラン",
+        kana: "れすとらん",
+        romaji: "resutoran",
+        zh: "餐廳",
+        note: "",
+        audioText: "れすとらん"
+      },
+      {
+        type: "word",
+        jp: "バス停",
+        kana: "ばすてい",
+        romaji: "basutei",
+        zh: "公車站",
+        note: "",
+        audioText: "ばすてい"
+      },
+      {
+        type: "word",
+        jp: "出口",
+        kana: "でぐち",
+        romaji: "deguchi",
+        zh: "出口",
+        note: "",
+        audioText: "でぐち"
+      }
+    ]
+  },
+
+  {
+    lessonId: 5,
+    title: "第5課｜ここだ（在這裡）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "ここだ。",
+        kana: "ここだ。",
+        romaji: "Koko da.",
+        zh: "在這裡。",
+        note: "",
+        audioText: "ここだ。"
+      },
+      {
+        type: "sentence",
+        jp: "ここです。",
+        kana: "ここです。",
+        romaji: "Koko desu.",
+        zh: "在這裡。（較客氣）",
+        note: "",
+        audioText: "ここです。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "財布(さいふ)はここだ。",
+        kana: "さいふはここだ。",
+        romaji: "Saifu wa koko da.",
+        zh: "錢包在這裡。",
+        note: "",
+        audioText: "財布はここだ。"
+      },
+      {
+        type: "sentence",
+        jp: "鍵(かぎ)はここだ。",
+        kana: "かぎはここだ。",
+        romaji: "Kagi wa koko da.",
+        zh: "鑰匙在這裡。",
+        note: "",
+        audioText: "鍵はここだ。"
+      },
+      {
+        type: "sentence",
+        jp: "水(みず)はここだ。",
+        kana: "みずはここだ。",
+        romaji: "Mizu wa koko da.",
+        zh: "水在這裡。",
+        note: "",
+        audioText: "水はここだ。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "財布",
+        kana: "さいふ",
+        romaji: "saifu",
+        zh: "錢包",
+        note: "",
+        audioText: "さいふ"
+      },
+      {
+        type: "word",
+        jp: "鍵",
+        kana: "かぎ",
+        romaji: "kagi",
+        zh: "鑰匙",
+        note: "",
+        audioText: "かぎ"
+      }
+    ]
+  },
+
+  {
+    lessonId: 6,
+    title: "第6課｜おめでとう（恭喜）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "お誕生日(たんじょうび)、おめでとう。",
+        kana: "おたんじょうび、おめでとう。",
+        romaji: "Otanjoubi, omedetou.",
+        zh: "生日快樂。",
+        note: "",
+        audioText: "お誕生日、おめでとう。"
+      },
+      {
+        type: "sentence",
+        jp: "おめでとうございます。",
+        kana: "おめでとうございます。",
+        romaji: "Omedetou gozaimasu.",
+        zh: "恭喜您。（敬語）",
+        note: "",
+        audioText: "おめでとうございます。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "入学(にゅうがく)、おめでとう。",
+        kana: "にゅうがく、おめでとう。",
+        romaji: "Nyuugaku, omedetou.",
+        zh: "恭喜入學。",
+        note: "",
+        audioText: "入学、おめでとう。"
+      },
+      {
+        type: "sentence",
+        jp: "合格(ごうかく)、おめでとう。",
+        kana: "ごうかく、おめでとう。",
+        romaji: "Goukaku, omedetou.",
+        zh: "恭喜合格。",
+        note: "",
+        audioText: "合格、おめでとう。"
+      },
+      {
+        type: "sentence",
+        jp: "卒業(そつぎょう)、おめでとう。",
+        kana: "そつぎょう、おめでとう。",
+        romaji: "Sotsugyou, omedetou.",
+        zh: "恭喜畢業。",
+        note: "",
+        audioText: "卒業、おめでとう。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "入学",
+        kana: "にゅうがく",
+        romaji: "nyuugaku",
+        zh: "入學",
+        note: "",
+        audioText: "にゅうがく"
+      },
+      {
+        type: "word",
+        jp: "合格",
+        kana: "ごうかく",
+        romaji: "goukaku",
+        zh: "合格",
+        note: "",
+        audioText: "ごうかく"
+      },
+      {
+        type: "word",
+        jp: "卒業",
+        kana: "そつぎょう",
+        romaji: "sotsugyou",
+        zh: "畢業",
+        note: "",
+        audioText: "そつぎょう"
+      }
+    ]
+  },
+
+  {
+    lessonId: 7,
+    title: "第7課｜どうしたの（怎麼了）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "どうしたの？",
+        kana: "どうしたの？",
+        romaji: "Dou shita no?",
+        zh: "怎麼了？（口語）",
+        note: "",
+        audioText: "どうしたの？"
+      },
+      {
+        type: "sentence",
+        jp: "どうしましたか？",
+        kana: "どうしましたか？",
+        romaji: "Dou shimashita ka?",
+        zh: "請問怎麼了？（敬語）",
+        note: "",
+        audioText: "どうしましたか？"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "どうしたの？ お腹(なか)が痛(いた)い。",
+        kana: "どうしたの？ なかがいたい。",
+        romaji: "Dou shita no? Naka ga itai.",
+        zh: "怎麼了？肚子痛。",
+        note: "",
+        audioText: "どうしたの？ お腹が痛い。"
+      },
+      {
+        type: "sentence",
+        jp: "どうしたの？ 眠(ねむ)い。",
+        kana: "どうしたの？ ねむい。",
+        romaji: "Dou shita no? Nemui.",
+        zh: "怎麼了？想睡覺。",
+        note: "",
+        audioText: "どうしたの？ 眠い。"
+      },
+      {
+        type: "sentence",
+        jp: "どうしたの？ 迷(まよ)った。",
+        kana: "どうしたの？ まよった。",
+        romaji: "Dou shita no? Mayotta.",
+        zh: "怎麼了？迷路了。",
+        note: "",
+        audioText: "どうしたの？ 迷った。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "お腹",
+        kana: "なか",
+        romaji: "naka",
+        zh: "肚子",
+        note: "",
+        audioText: "なか"
+      },
+      {
+        type: "word",
+        jp: "痛い",
+        kana: "いたい",
+        romaji: "itai",
+        zh: "痛",
+        note: "",
+        audioText: "いたい"
+      },
+      {
+        type: "word",
+        jp: "眠い",
+        kana: "ねむい",
+        romaji: "nemui",
+        zh: "想睡",
+        note: "",
+        audioText: "ねむい"
+      },
+      {
+        type: "word",
+        jp: "迷う",
+        kana: "まよう",
+        romaji: "mayou",
+        zh: "迷路、猶豫",
+        note: "",
+        audioText: "まよう"
+      }
+    ]
+  },
+
+  {
+    lessonId: 8,
+    title: "第8課｜いたい（痛）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "いたい。",
+        kana: "いたい。",
+        romaji: "Itai.",
+        zh: "好痛。",
+        note: "",
+        audioText: "いたい。"
+      },
+      {
+        type: "sentence",
+        jp: "だいじょうぶですか。",
+        kana: "だいじょうぶですか。",
+        romaji: "Daijoubu desu ka?",
+        zh: "你還好嗎？",
+        note: "",
+        audioText: "だいじょうぶですか。"
+      },
+      {
+        type: "sentence",
+        jp: "だいじょうぶです。",
+        kana: "だいじょうぶです。",
+        romaji: "Daijoubu desu.",
+        zh: "我沒事。",
+        note: "",
+        audioText: "だいじょうぶです。"
+      },
+      {
+        type: "sentence",
+        jp: "どうしたの。",
+        kana: "どうしたの。",
+        romaji: "Dou shita no?",
+        zh: "怎麼了？",
+        note: "",
+        audioText: "どうしたの。"
+      },
+      {
+        type: "sentence",
+        jp: "あしをぶつけてしまいました。",
+        kana: "あしをぶつけてしまいました。",
+        romaji: "Ashi o butsukete shimaimashita.",
+        zh: "不小心撞到腳了。",
+        note: "",
+        audioText: "あしをぶつけてしまいました。"
+      },
+      {
+        type: "sentence",
+        jp: "だいじょうぶですか。",
+        kana: "だいじょうぶですか。",
+        romaji: "Daijoubu desu ka?",
+        zh: "你還好嗎？",
+        note: "",
+        audioText: "だいじょうぶですか。"
+      },
+      {
+        type: "sentence",
+        jp: "だいじょうぶです。",
+        kana: "だいじょうぶです。",
+        romaji: "Daijoubu desu.",
+        zh: "我沒事。",
+        note: "",
+        audioText: "だいじょうぶです。"
+      },
+
+      // ⑤-1 延伸對話句子（只取新句子）
+      {
+        type: "sentence",
+        jp: "てをぶつけました。",
+        kana: "てをぶつけました。",
+        romaji: "Te o butsukemashita.",
+        zh: "撞到手了。",
+        note: "",
+        audioText: "てをぶつけました。"
+      },
+      {
+        type: "sentence",
+        jp: "いたい？",
+        kana: "いたい？",
+        romaji: "Itai?",
+        zh: "痛嗎？",
+        note: "",
+        audioText: "いたい？"
+      },
+      {
+        type: "sentence",
+        jp: "いたいけど、だいじょうぶです。",
+        kana: "いたいけど、だいじょうぶです。",
+        romaji: "Itai kedo, daijoubu desu.",
+        zh: "雖然痛，但沒事。",
+        note: "",
+        audioText: "いたいけど、だいじょうぶです。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "て",
+        kana: "て",
+        romaji: "te",
+        zh: "手",
+        note: "",
+        audioText: "て"
+      },
+      {
+        type: "word",
+        jp: "ぶつける",
+        kana: "ぶつける",
+        romaji: "butsukeru",
+        zh: "撞到",
+        note: "",
+        audioText: "ぶつける"
+      },
+      {
+        type: "word",
+        jp: "ぶつけました",
+        kana: "ぶつけました",
+        romaji: "butsukemashita",
+        zh: "撞到了（過去式）",
+        note: "",
+        audioText: "ぶつけました"
+      },
+      {
+        type: "word",
+        jp: "しまいました",
+        kana: "しまいました",
+        romaji: "shimaimashita",
+        zh: "表示「不小心就⋯了」的語尾",
+        note: "",
+        audioText: "しまいました"
+      }
+    ]
+  },
+
+  {
+    lessonId: 9,
+    title: "第9課｜おやすみ（晚安）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "おやすみ。",
+        kana: "おやすみ。",
+        romaji: "Oyasumi.",
+        zh: "晚安。（口語）",
+        note: "",
+        audioText: "おやすみ。"
+      },
+      {
+        type: "sentence",
+        jp: "おやすみなさい。",
+        kana: "おやすみなさい。",
+        romaji: "Oyasuminasai.",
+        zh: "晚安。（敬語）",
+        note: "",
+        audioText: "おやすみなさい。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "いい夢(ゆめ)を見(み)てね。",
+        kana: "いいゆめをみてね。",
+        romaji: "Ii yume o mite ne.",
+        zh: "做個好夢。",
+        note: "",
+        audioText: "いい夢を見てね。"
+      },
+      {
+        type: "sentence",
+        jp: "また明日(あした)。",
+        kana: "またあした。",
+        romaji: "Mata ashita.",
+        zh: "明天見。",
+        note: "",
+        audioText: "また明日。"
+      },
+      {
+        type: "sentence",
+        jp: "ゆっくり休(やす)んでね。",
+        kana: "ゆっくりやすんでね。",
+        romaji: "Yukkuri yasunde ne.",
+        zh: "好好休息。",
+        note: "",
+        audioText: "ゆっくり休んでね。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "夢",
+        kana: "ゆめ",
+        romaji: "yume",
+        zh: "夢",
+        note: "",
+        audioText: "ゆめ"
+      },
+      {
+        type: "word",
+        jp: "明日",
+        kana: "あした",
+        romaji: "ashita",
+        zh: "明天",
+        note: "",
+        audioText: "あした"
+      },
+      {
+        type: "word",
+        jp: "休む",
+        kana: "やすむ",
+        romaji: "yasumu",
+        zh: "休息",
+        note: "",
+        audioText: "やすむ"
+      }
+    ]
+  },
+
+  {
+    lessonId: 10,
+    title: "第10課｜○○，お願いします（我要～）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "〜、お願いします。",
+        kana: "〜、おねがいします。",
+        romaji: "~, onegai shimasu.",
+        zh: "請給我～。",
+        note: "",
+        audioText: "お願いします。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "水(みず)、お願いします。",
+        kana: "みず、おねがいします。",
+        romaji: "Mizu, onegai shimasu.",
+        zh: "請給我水。",
+        note: "",
+        audioText: "水、お願いします。"
+      },
+      {
+        type: "sentence",
+        jp: "メニュー、お願いします。",
+        kana: "めにゅー、おねがいします。",
+        romaji: "Menyuu, onegai shimasu.",
+        zh: "請給我菜單。",
+        note: "",
+        audioText: "メニュー、お願いします。"
+      },
+      {
+        type: "sentence",
+        jp: "袋(ふくろ)、お願いします。",
+        kana: "ふくろ、おねがいします。",
+        romaji: "Fukuro, onegai shimasu.",
+        zh: "請給我袋子。",
+        note: "",
+        audioText: "袋、お願いします。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "メニュー",
+        kana: "めにゅー",
+        romaji: "menyuu",
+        zh: "菜單",
+        note: "",
+        audioText: "めにゅー"
+      },
+      {
+        type: "word",
+        jp: "袋",
+        kana: "ふくろ",
+        romaji: "fukuro",
+        zh: "袋子",
+        note: "",
+        audioText: "ふくろ"
+      }
+    ]
+  },
+
+  {
+    lessonId: 11,
+    title: "第11課｜どっちがいいですか（你要哪一個）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "どっちがいいですか。",
+        kana: "どっちがいいですか。",
+        romaji: "Docchi ga ii desu ka?",
+        zh: "哪一個比較好？",
+        note: "",
+        audioText: "どっちがいいですか。"
+      },
+      {
+        type: "sentence",
+        jp: "どっちがいい？",
+        kana: "どっちがいい？",
+        romaji: "Docchi ga ii?",
+        zh: "要哪一個？（口語）",
+        note: "",
+        audioText: "どっちがいい？"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "赤(あか)と青(あお)、どっちがいい？",
+        kana: "あかとあお、どっちがいい？",
+        romaji: "Aka to ao, docchi ga ii?",
+        zh: "紅色跟藍色哪個好？",
+        note: "",
+        audioText: "赤と青、どっちがいい？"
+      },
+      {
+        type: "sentence",
+        jp: "大(おお)きいのと小(ちい)さいの、どっちがいい？",
+        kana: "おおきいのとちいさいの、どっちがいい？",
+        romaji: "Ookii no to chiisai no, docchi ga ii?",
+        zh: "大的跟小的哪個好？",
+        note: "",
+        audioText: "大きいのと小さいの、どっちがいい？"
+      },
+      {
+        type: "sentence",
+        jp: "新(あたら)しいのと古(ふる)いの、どっちがいい？",
+        kana: "あたらしいのとふるいの、どっちがいい？",
+        romaji: "Atarashii no to furui no, docchi ga ii?",
+        zh: "新的跟舊的哪個好？",
+        note: "",
+        audioText: "新しいのと古いの、どっちがいい？"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "赤",
+        kana: "あか",
+        romaji: "aka",
+        zh: "紅色",
+        note: "",
+        audioText: "あか"
+      },
+      {
+        type: "word",
+        jp: "青",
+        kana: "あお",
+        romaji: "ao",
+        zh: "藍色",
+        note: "",
+        audioText: "あお"
+      },
+      {
+        type: "word",
+        jp: "大きい",
+        kana: "おおきい",
+        romaji: "ookii",
+        zh: "大",
+        note: "",
+        audioText: "おおきい"
+      },
+      {
+        type: "word",
+        jp: "小さい",
+        kana: "ちいさい",
+        romaji: "chiisai",
+        zh: "小",
+        note: "",
+        audioText: "ちいさい"
+      },
+      {
+        type: "word",
+        jp: "新しい",
+        kana: "あたらしい",
+        romaji: "atarashii",
+        zh: "新的",
+        note: "",
+        audioText: "あたらしい"
+      },
+      {
+        type: "word",
+        jp: "古い",
+        kana: "ふるい",
+        romaji: "furui",
+        zh: "舊的",
+        note: "",
+        audioText: "ふるい"
+      }
+    ]
+  },
+
+  {
+    lessonId: 12,
+    title: "第12課｜くらべてみよう（比比看）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "くらべてみよう。",
+        kana: "くらべてみよう。",
+        romaji: "Kurabete miyou.",
+        zh: "來比較看看。",
+        note: "",
+        audioText: "くらべてみよう。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "どっちが重(おも)い？ くらべてみよう。",
+        kana: "どっちがおもい？ くらべてみよう。",
+        romaji: "Docchi ga omoi? Kurabete miyou.",
+        zh: "哪個比較重？來比較看看。",
+        note: "",
+        audioText: "どっちが重い？ くらべてみよう。"
+      },
+      {
+        type: "sentence",
+        jp: "どっちが広(ひろ)い？ くらべてみよう。",
+        kana: "どっちがひろい？ くらべてみよう。",
+        romaji: "Docchi ga hiroi? Kurabete miyou.",
+        zh: "哪個比較寬？來比較看看。",
+        note: "",
+        audioText: "どっちが広い？ くらべてみよう。"
+      },
+      {
+        type: "sentence",
+        jp: "どっちが速(はや)い？ くらべてみよう。",
+        kana: "どっちがはやい？ くらべてみよう。",
+        romaji: "Docchi ga hayai? Kurabete miyou.",
+        zh: "哪個比較快？來比較看看。",
+        note: "",
+        audioText: "どっちが速い？ くらべてみよう。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "重い",
+        kana: "おもい",
+        romaji: "omoi",
+        zh: "重",
+        note: "",
+        audioText: "おもい"
+      },
+      {
+        type: "word",
+        jp: "広い",
+        kana: "ひろい",
+        romaji: "hiroi",
+        zh: "寬、廣",
+        note: "",
+        audioText: "ひろい"
+      },
+      {
+        type: "word",
+        jp: "速い",
+        kana: "はやい",
+        romaji: "hayai",
+        zh: "快",
+        note: "",
+        audioText: "はやい"
+      }
+    ]
+  },
+
+  {
+    lessonId: 13,
+    title: "第13課｜ずいぶん散らかっているね（好亂喔）",
+    cards: [
+      // ① 主要句子
+      {
+        type: "sentence",
+        jp: "ずいぶん散(ち)らかっているね。",
+        kana: "ずいぶんちらかっているね。",
+        romaji: "Zuibun chirakatte iru ne.",
+        zh: "真的很亂耶。",
+        note: "",
+        audioText: "ずいぶん散らかっているね。"
+      },
+
+      // ⑤-1 延伸句子
+      {
+        type: "sentence",
+        jp: "机(つくえ)が散(ち)らかっているね。",
+        kana: "つくえがちらかっているね。",
+        romaji: "Tsukue ga chirakatte iru ne.",
+        zh: "桌子很亂耶。",
+        note: "",
+        audioText: "机が散らかっているね。"
+      },
+      {
+        type: "sentence",
+        jp: "ここ、片付(かたづ)けようか。",
+        kana: "ここ、かたづけようか。",
+        romaji: "Koko, katazukeyou ka.",
+        zh: "這裡整理一下吧？",
+        note: "",
+        audioText: "ここ、片付けようか。"
+      },
+      {
+        type: "sentence",
+        jp: "すごい散(ち)らかりようだね。",
+        kana: "すごいちらかりようだね。",
+        romaji: "Sugoi chirakariyou da ne.",
+        zh: "真的亂成這樣啊。",
+        note: "",
+        audioText: "すごい散らかりようだね。"
+      },
+
+      // ⑤-2 新單字
+      {
+        type: "word",
+        jp: "机",
+        kana: "つくえ",
+        romaji: "tsukue",
+        zh: "桌子",
+        note: "",
+        audioText: "つくえ"
+      },
+      {
+        type: "word",
+        jp: "散らかる",
+        kana: "ちらかる",
+        romaji: "chirakaru",
+        zh: "散亂",
+        note: "",
+        audioText: "ちらかる"
+      },
+      {
+        type: "word",
+        jp: "片付ける",
+        kana: "かたづける",
+        romaji: "katazukeru",
+        zh: "整理",
+        note: "",
+        audioText: "かたづける"
+      }
+    ]
+  }
+];
 
  
         // 🚀 之後要新增第2課，就像這樣複製一份改內容（範例）：
@@ -555,5 +1609,6 @@
     </script>
   </body>
 </html>
+
 
 
