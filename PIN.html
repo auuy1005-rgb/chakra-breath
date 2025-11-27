@@ -2,46 +2,414 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>Pinterest 測試</title>
+  <title>情緒繪畫靈感機 🎨</title>
   <style>
-    body {
-      margin: 0;
-      padding: 24px;
+    :root {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #444;
       color: #f5f5f5;
     }
-    .pinterest-wrapper {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      max-height: 500px;
-      overflow: auto;
-      background: #333;
-      border-radius: 8px;
-      padding: 4px;
+
+    body {
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      background: #444;
+      color: #f5f5f5;
+      box-sizing: border-box;
     }
-    iframe {
-      width: 100%;
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .desc {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .panel {
+      background: #333;
+      border-radius: 12px;
+      padding: 16px;
+      flex: 1 1 320px;
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .panel p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #eee;
+      word-break: break-all;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #666;
+      color: #fff;
+    }
+
+    .sentence-box {
+      font-size: 16px;
+      line-height: 1.6;
+      background: #222;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 8px;
+      white-space: pre-wrap;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    button {
+      background: #ffb84d;
       border: none;
-      min-height: 420px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #222;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #ffc76e;
+    }
+
+    button.secondary {
+      background: #666;
+      color: #f5f5f5;
+    }
+
+    button.secondary:hover {
+      background: #777;
+    }
+
+    .small-label {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .result-card {
+      background: #222;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .result-card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #ffd27f;
+    }
+
+    .unsplash-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .unsplash-images {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .unsplash-card {
+      flex: 1 1 180px;
+      background: #555;
+      border-radius: 10px;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .unsplash-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      background: #222;
+    }
+
+    .unsplash-info {
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .unsplash-author {
+      font-weight: 600;
+    }
+
+    .unsplash-link a {
+      color: #ffd27f;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .unsplash-link a:hover {
+      text-decoration: underline;
+    }
+
+    .code-hint {
+      font-size: 12px;
+      color: #bbb;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
+      }
+
+      .layout {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Pinterest 圖板內嵌測試 🎯</h1>
+  <header>
+    <h1>情緒繪畫靈感機 🎨</h1>
+    <p class="desc">
+      按一下按鈕，系統會從：<br />
+      a：主體資料庫（蘋果、小動物、物件…）<br />
+      b：角色特性資料庫（喜歡早晨的、慢慢生活的…）<br />
+      c：情緒／狀態資料庫（正在展開柔和的一天、今天狀態很清爽…）<br />
+      d：句型模板資料庫（把 a/b/c 塞進去變成一句完整題目）<br />
+      再幫你配兩張 Unsplash 隨機參考圖，當成今天的畫圖起點。
+    </p>
+  </header>
 
-  <div class="pinterest-wrapper">
+  <main class="layout">
+    <!-- 左側：文字結果區 -->
+    <section class="panel">
+      <h2>隨機抽題結果 ✨</h2>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-card-title">a｜主體</div>
+          <p id="result-a-text">（等你按下按鈕）</p>
+          <p class="small-label">id：<span id="result-a-id">-</span>｜tag：<span id="result-a-tag">-</span></p>
+        </div>
+        <div class="result-card">
+          <div class="result-card-title">b｜角色特性</div>
+          <p id="result-b-text">（等你按下按鈕）</p>
+          <p class="small-label">id：<span id="result-b-id">-</span></p>
+        </div>
+        <div class="result-card">
+          <div class="result-card-title">c｜情緒／狀態</div>
+          <p id="result-c-text">（等你按下按鈕）</p>
+          <p class="small-label">id：<span id="result-c-id">-</span></p>
+        </div>
+        <div class="result-card">
+          <div class="result-card-title">d｜句型模板</div>
+          <p id="result-d-id">（等你按下按鈕）</p>
+          <p class="small-label">模板：<span id="result-d-template">-</span></p>
+        </div>
+      </div>
 
-    <!-- ⭐⭐ 已把原本的 <a data-pin-do="embedBoard"> 換成 iframe ⭐⭐ -->
-    <iframe
-      src="https://www.pinterest.com/kaokao00110/0%E9%A2%A8%E6%A0%BC%E7%B7%B4%E6%88%90/"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+      <div class="sentence-box" id="final-sentence">
+        👉 按「抽一題」來生成一句完整的畫圖題目
+      </div>
 
-  </div>
+      <div class="btn-row">
+        <button id="generateBtn">抽一題 🎲</button>
+      </div>
 
+      <p class="code-hint">
+        每一次會重新抽 a / b / c / d。之後如果要做「鎖 a 只抽 bcd」之類的進階版，
+        可以再加按鈕跟條件邏輯。
+      </p>
+    </section>
+
+    <!-- 右側：圖片靈感區 -->
+    <section class="panel unsplash-panel">
+      <h2>Unsplash 隨機參考圖 🖼️</h2>
+      <p class="small-label">
+        目前設定：只隨機，不下關鍵字。<br />
+        如果出現灰灰的或壞掉的圖，可以按「重抽圖片」重新載入。
+      </p>
+
+      <div class="unsplash-images">
+        <div class="unsplash-card">
+          <img id="unsplash-img-1" alt="Unsplash 圖片 1" />
+          <div class="unsplash-info">
+            <div class="unsplash-author" id="unsplash-author-1">作者：-</div>
+            <div class="unsplash-link">來源：<a id="unsplash-link-1" href="#" target="_blank" rel="noopener noreferrer">-</a></div>
+          </div>
+        </div>
+        <div class="unsplash-card">
+          <img id="unsplash-img-2" alt="Unsplash 圖片 2" />
+          <div class="unsplash-info">
+            <div class="unsplash-author" id="unsplash-author-2">作者：-</div>
+            <div class="unsplash-link">來源：<a id="unsplash-link-2" href="#" target="_blank" rel="noopener noreferrer">-</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="secondary" id="refreshUnsplashBtn">重抽圖片 🔄</button>
+      </div>
+
+      <p class="code-hint">
+        圖片來源使用 Unsplash 的隨機 API。<br />
+        未來你如果想做「跟 a.tag 對應某種關鍵字」版，可以在 fetch 前面加條件。
+      </p>
+    </section>
+  </main>
+
+  <!-- Pinterest 官方 widget 腳本（就算留著也不會影響 Unsplash） -->
+  <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+  <script src="db.js"></script>
+
+  <script>
+    // 資料庫 dbA / dbB / dbC / dbD 由外部 db.js 載入
+
+    // 抽一個元素
+    function pickRandom(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    // 組合句子
+    function buildPrompt() {
+      const a = pickRandom(dbA);
+      const b = pickRandom(dbB);
+      const c = pickRandom(dbC);
+      const d = pickRandom(dbD);
+
+      let sentence = d.template;
+      sentence = sentence.replace("{a}", a.text);
+      sentence = sentence.replace("{b}", b.text);
+      sentence = sentence.replace("{c}", c.text);
+
+      return { a, b, c, d, sentence };
+    }
+
+    // 把結果塞進畫面
+    const resultAText = document.getElementById("result-a-text");
+    const resultAId = document.getElementById("result-a-id");
+    const resultATag = document.getElementById("result-a-tag");
+
+    const resultBText = document.getElementById("result-b-text");
+    const resultBId = document.getElementById("result-b-id");
+
+    const resultCText = document.getElementById("result-c-text");
+    const resultCId = document.getElementById("result-c-id");
+
+    const resultDId = document.getElementById("result-d-id");
+    const resultDTemplate = document.getElementById("result-d-template");
+
+    const finalSentenceBox = document.getElementById("final-sentence");
+    const generateBtn = document.getElementById("generateBtn");
+
+    function renderPrompt() {
+      const { a, b, c, d, sentence } = buildPrompt();
+
+      resultAText.textContent = a.text;
+      resultAId.textContent = a.id;
+      resultATag.textContent = a.tag || "-";
+
+      resultBText.textContent = b.text;
+      resultBId.textContent = b.id;
+
+      resultCText.textContent = c.text;
+      resultCId.textContent = c.id;
+
+      resultDId.textContent = d.id;
+      resultDTemplate.textContent = d.template;
+
+      finalSentenceBox.textContent = sentence;
+    }
+
+    generateBtn.addEventListener("click", renderPrompt);
+
+    // ---- Unsplash 隨機圖 ----
+    const unsplashImg1 = document.getElementById("unsplash-img-1");
+    const unsplashAuthor1 = document.getElementById("unsplash-author-1");
+    const unsplashLink1 = document.getElementById("unsplash-link-1");
+
+    const unsplashImg2 = document.getElementById("unsplash-img-2");
+    const unsplashAuthor2 = document.getElementById("unsplash-author-2");
+    const unsplashLink2 = document.getElementById("unsplash-link-2");
+
+    const refreshUnsplashBtn = document.getElementById("refreshUnsplashBtn");
+
+    async function setUnsplash(imgEl, authorEl, linkEl) {
+      try {
+        const response = await fetch("https://source.unsplash.com/random/800x600/?mood");
+        // response.url 會是實際圖片網址
+        imgEl.src = response.url;
+
+        if (authorEl && linkEl) {
+          authorEl.textContent = "作者：隨機";
+          linkEl.textContent = response.url;
+          linkEl.href = response.url;
+        }
+      } catch (err) {
+        imgEl.alt = "載入圖片失敗，可以再按一次重抽圖片。";
+        if (authorEl) authorEl.textContent = "作者：-";
+        if (linkEl) {
+          linkEl.textContent = "載入失敗";
+          linkEl.href = "#";
+        }
+      }
+    }
+
+    function refreshUnsplash() {
+      // 第一張圖
+      setUnsplash(unsplashImg1, unsplashAuthor1, unsplashLink1);
+      // 第二張圖
+      setUnsplash(unsplashImg2, unsplashAuthor2, unsplashLink2);
+    }
+
+    refreshUnsplashBtn.addEventListener("click", refreshUnsplash);
+
+    // 進頁面時先載一組
+    refreshUnsplash();
+  </script>
 </body>
 </html>
