@@ -21,22 +21,27 @@
       border-radius: 8px;
       padding: 4px;
     }
+    iframe {
+      width: 100%;
+      border: none;
+      min-height: 420px;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
   <h1>Pinterest 圖板內嵌測試 🎯</h1>
 
   <div class="pinterest-wrapper">
-    <a
-      data-pin-do="embedBoard"
-      data-pin-board-width="600"
-      data-pin-scale-height="360"
-      data-pin-scale-width="80"
-      href="https://www.pinterest.com/kaokao00110/0%E9%A2%A8%E6%A0%BC%E7%B7%B4%E6%88%90/">
-    </a>
+
+    <!-- ⭐⭐ 已把原本的 <a data-pin-do="embedBoard"> 換成 iframe ⭐⭐ -->
+    <iframe
+      src="https://www.pinterest.com/kaokao00110/0%E9%A2%A8%E6%A0%BC%E7%B7%B4%E6%88%90/"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+
   </div>
 
-  <!-- 官方 widget 腳本，一定要有 -->
-  <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
 </body>
 </html>
