@@ -154,23 +154,15 @@
       text-decoration: underline;
     }
 
-.unsplash-grid {
-  display: flex;
-  gap: 8px;
-}
-
-.unsplash-grid-item {
-  flex: 1 1 0;
-}
-
-.unsplash-img {
-  width: 100%;
-  height: auto;        /* 重點：高度自動，照原始比例 */
-  border-radius: 8px;
-  display: block;
-  background: #333;    /* 沒載到時的底色 */
-}
-
+    .unsplash-img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: block;
+      max-height: 260px;
+      object-fit: cover;
+      background: #333;
+    }
 
     .small-note {
       font-size: 11px;
@@ -178,7 +170,23 @@
       margin-top: 4px;
     }
 
+    .pinterest-wrapper {
+      width: 100%;
+      max-height: 420px;
+      overflow: auto;
+      background: #444;
+      border-radius: 8px;
+      padding: 4px;
+    }
 
+    .unsplash-grid {
+      display: flex;
+      gap: 8px;
+    }
+
+    .unsplash-grid-item {
+      flex: 1 1 0;
+    }
 
     @media (max-width: 640px) {
       body {
@@ -227,50 +235,54 @@
       </div>
       <div class="small-note">
         ※ 句型來自 d 資料庫（C1 / C3 / C5 / C6），之後可以再擴充 C2 / C4 / C7 / C8。
+      </div>
+    </div>
 
-
+    <!-- 參考圖區 -->
+    <div class="refs">
+      <!-- 這裡原本是 Pinterest ，你已經拿掉，保留 Unsplash 區塊 -->
 
       <!-- Unsplash：source.unsplash + 備援 -->
- <div class="ref-card">
-  <div class="ref-title">參考圖｜Unsplash</div>
-  <div class="ref-body">
+      <div class="ref-card">
+        <div class="ref-title">參考圖｜Unsplash</div>
+        <div class="ref-body">
 
-    <!-- 兩張圖並排 -->
-    <div class="unsplash-grid">
-      <div class="unsplash-grid-item">
-        <img
-          id="unsplashImg1"
-          class="unsplash-img"
-          src=""
-          alt="Unsplash 參考圖 1"
-          referrerpolicy="no-referrer"
-        />
+          <!-- 兩張圖並排 -->
+          <div class="unsplash-grid">
+            <div class="unsplash-grid-item">
+              <img
+                id="unsplashImg1"
+                class="unsplash-img"
+                src=""
+                alt="Unsplash 參考圖 1"
+                referrerpolicy="no-referrer"
+              />
+            </div>
+            <div class="unsplash-grid-item">
+              <img
+                id="unsplashImg2"
+                class="unsplash-img"
+                src=""
+                alt="Unsplash 參考圖 2"
+                referrerpolicy="no-referrer"
+              />
+            </div>
+          </div>
+
+          <button id="refreshUnsplashBtn" style="margin-top:12px;">
+            換一組 Unsplash 圖 🔁
+          </button>
+
+          <div class="small-note">
+            目前使用 Unsplash 的公開隨機圖，若載入失敗會自動換成備用隨機圖。
+          </div>
+        </div>
       </div>
-      <div class="unsplash-grid-item">
-        <img
-          id="unsplashImg2"
-          class="unsplash-img"
-          src=""
-          alt="Unsplash 參考圖 2"
-          referrerpolicy="no-referrer"
-        />
-      </div>
-    </div>
-
-    <button id="refreshUnsplashBtn" style="margin-top:12px;">
-      換一組 Unsplash 圖 🔁
-    </button>
-
-    <div class="small-note">
-      目前使用 Unsplash 的公開隨機圖，若載入失敗會自動換成備用隨機圖。
-    </div>
-  </div>
-</div>
 
     </div>
   </main>
 
-  <!-- Pinterest 官方 widget 腳本 -->
+  <!-- Pinterest 官方 widget 腳本（就算留著也不會影響 Unsplash） -->
   <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
 
   <script>
@@ -285,74 +297,91 @@
     { "id": "tomato", "text": "一顆番茄", "tag": "fruit" },
     { "id": "orange", "text": "一顆柳橙", "tag": "fruit" },
     { "id": "banana", "text": "一根香蕉", "tag": "fruit" },
+
+    { "id": "avocado", "text": "一顆酪梨", "tag": "fruit" },
+    { "id": "watermelon", "text": "一片西瓜", "tag": "fruit" },
     { "id": "blueberry", "text": "一顆藍莓", "tag": "fruit" },
+    { "id": "strawberry", "text": "一顆草莓", "tag": "fruit" },
+    { "id": "cherry", "text": "一顆櫻桃", "tag": "fruit" },
 
     { "id": "potato", "text": "一顆馬鈴薯", "tag": "veggie" },
+    { "id": "sweet_potato", "text": "一顆地瓜", "tag": "veggie" },
     { "id": "carrot", "text": "一根紅蘿蔔", "tag": "veggie" },
     { "id": "onion", "text": "一顆洋蔥", "tag": "veggie" },
     { "id": "garlic", "text": "一瓣大蒜", "tag": "veggie" },
-    { "id": "chili", "text": "一顆辣椒", "tag": "veggie" },
-    { "id": "taro", "text": "一顆芋頭", "tag": "veggie" },
-    { "id": "radish", "text": "一顆白蘿蔔", "tag": "veggie" },
-    { "id": "corn", "text": "一根玉米", "tag": "veggie" },
-    { "id": "broccoli", "text": "一朵花椰菜", "tag": "veggie" },
+    { "id": "radish", "text": "一根白蘿蔔", "tag": "veggie" },
+    { "id": "eggplant", "text": "一條茄子", "tag": "veggie" },
     { "id": "cabbage", "text": "一顆高麗菜", "tag": "veggie" },
+    { "id": "broccoli", "text": "一朵花椰菜", "tag": "veggie" },
+    { "id": "corn", "text": "一根玉米", "tag": "veggie" },
 
     { "id": "cat", "text": "一隻小貓", "tag": "animal" },
     { "id": "octopus", "text": "一隻章魚", "tag": "animal" },
-    { "id": "turtle", "text": "一隻烏龜", "tag": "animal" },
     { "id": "fox", "text": "一隻狐狸", "tag": "animal" },
     { "id": "hedgehog", "text": "一隻刺蝟", "tag": "animal" },
-    { "id": "otter", "text": "一隻海獺", "tag": "animal" },
-    { "id": "hamster", "text": "一隻倉鼠", "tag": "animal" },
-    { "id": "bird", "text": "一隻小鳥", "tag": "animal" },
+    { "id": "turtle", "text": "一隻烏龜", "tag": "animal" },
     { "id": "whale", "text": "一隻鯨魚", "tag": "animal" },
-    { "id": "frog", "text": "一隻青蛙", "tag": "animal" },
+    { "id": "bird", "text": "一隻小鳥", "tag": "animal" },
+    { "id": "snail", "text": "一隻蝸牛", "tag": "animal" },
+    { "id": "shrimp", "text": "一隻小蝦", "tag": "animal" },
+    { "id": "crab", "text": "一隻螃蟹", "tag": "animal" },
 
     { "id": "laptop", "text": "一台筆電", "tag": "object" },
     { "id": "alarm_clock", "text": "一個鬧鐘", "tag": "object" },
-    { "id": "notebook", "text": "一本筆記本", "tag": "object" },
-    { "id": "sticky_note", "text": "一張便利貼", "tag": "object" },
-    { "id": "water_bottle", "text": "一個水壺", "tag": "object" },
     { "id": "camera", "text": "一台相機", "tag": "object" },
-    { "id": "backpack", "text": "一個書包", "tag": "object" },
     { "id": "trashcan", "text": "一個垃圾桶", "tag": "object" },
-    { "id": "lantern", "text": "一盞桌燈", "tag": "object" },
-    { "id": "keychain", "text": "一個鑰匙圈", "tag": "object" },
-
-    { "id": "headphones", "text": "一副耳機", "tag": "object" },
-    { "id": "sticker_sheet", "text": "一張貼紙", "tag": "object" },
-    { "id": "envelope", "text": "一個信封", "tag": "object" },
-    { "id": "shopping_bag", "text": "一個購物袋", "tag": "object" },
-    { "id": "pillow", "text": "一顆枕頭", "tag": "object" },
-    { "id": "cup", "text": "一個杯子", "tag": "object" },
-    { "id": "map", "text": "一張地圖", "tag": "object" },
-    { "id": "calendar", "text": "一個行事曆", "tag": "object" },
-    { "id": "cloud_spirit", "text": "一個雲朵精靈", "tag": "object" },
-    { "id": "wind_chime", "text": "一個風鈴精怪", "tag": "object" }
+    { "id": "chair", "text": "一張椅子", "tag": "object" },
+    { "id": "mirror", "text": "一面鏡子", "tag": "object" },
+    { "id": "backpack", "text": "一個背包", "tag": "object" },
+    { "id": "key", "text": "一把鑰匙", "tag": "object" },
+    { "id": "book", "text": "一本書", "tag": "object" },
+    { "id": "phone", "text": "一支手機", "tag": "object" }
     ];
 
-    // b：特性
+    // b：特性（traits）
     const dbB = [
     { "id": "phone_addict", "text": "愛滑手機的" },
-    { "id": "overthinking", "text": "過度思考的" },
     { "id": "social_tired", "text": "社交疲勞的" },
-    { "id": "pretending_professional", "text": "假裝專業的" },
-    { "id": "sleepy", "text": "快要睡著的" },
+    { "id": "overthinking", "text": "過度思考的" },
+    { "id": "sleepy", "text": "睡不飽的" },
     { "id": "procrastinating", "text": "拖延症爆發的" },
-    { "id": "low_energy", "text": "能量不足的" },
-    { "id": "anxiety_rising", "text": "焦慮發酵中的" },
-    { "id": "mentally_done", "text": "心裡喊著算了的" },
-    { "id": "unable_to_focus", "text": "無法專心的" },
-    { "id": "quietly_escaping", "text": "偷偷逃避的" },
-    { "id": "self_scare", "text": "自己嚇自己的" },
-    { "id": "just_want_to_lie", "text": "只想躺平的" },
-    { "id": "system_freezing", "text": "工作當機的" },
-    { "id": "notification_bombed", "text": "被提醒轟炸的" },
-    { "id": "want_vacation", "text": "想放假到歪掉的" },
-    { "id": "look_busy", "text": "看起來很忙的" },
-    { "id": "covered_notes", "text": "背後貼滿小紙條的" },
-    { "id": "practicing_no", "text": "練習拒絕中的" },
+
+    { "id": "worn_out", "text": "被生活磨到鈍掉的" },
+    { "id": "fake_ok_acting", "text": "假裝沒事的" },
+    { "id": "auto_pilot", "text": "自動駕駛中的" },
+    { "id": "mind_noise", "text": "腦內雜訊很大的" },
+    { "id": "emotion_tangled", "text": "情緒打結的" },
+
+    { "id": "slow_buffer", "text": "反應緩衝超慢的" },
+    { "id": "ghost_mode", "text": "開啟幽靈模式的" },
+    { "id": "too_many_tabs", "text": "腦內開太多分頁的" },
+    { "id": "low_battery", "text": "一直顯示低電量的" },
+    { "id": "noise_sensitive", "text": "對聲音很敏感的" },
+
+    { "id": "no_motivation", "text": "沒有動力的" },
+    { "id": "emotion_hang", "text": "情緒當機中的" },
+    { "id": "fake_bright", "text": "笑容過度用力的" },
+    { "id": "easy_overload", "text": "一下就超載的" },
+    { "id": "deadline_chasing", "text": "被期限追著跑的" },
+
+    { "id": "mind_fog", "text": "腦袋充滿霧氣的" },
+    { "id": "social_mask", "text": "戴著社交面具的" },
+    { "id": "emotion_delay", "text": "情緒延遲顯示的" },
+    { "id": "quiet_panic", "text": "安靜地慌張中的" },
+    { "id": "overload_shut", "text": "超載到直接關機的" },
+
+    { "id": "hyper_focus", "text": "過度專注但很累的" },
+    { "id": "body_present", "text": "身體到場靈魂缺席的" },
+    { "id": "mind_loop", "text": "思緒一直重播的" },
+    { "id": "emotion_freeze", "text": "情緒卡住的" },
+    { "id": "cant_relax", "text": "放鬆也會內疚的" },
+
+    { "id": "too_polite", "text": "太客氣的" },
+    { "id": "people_pleaser", "text": "很怕拒絕人的" },
+    { "id": "self_blame", "text": "容易怪自己的" },
+    { "id": "emotion_spill", "text": "容易超載外漏的" },
+    { "id": "no_space", "text": "覺得沒空間呼吸的" },
+
     { "id": "low_patience", "text": "對生活沒耐性的" },
 
     { "id": "drifting_mind", "text": "思緒飄走的" },
@@ -383,87 +412,67 @@
     { "id": "rooted_lazy", "text": "懶到長根的" },
     { "id": "loop_phrase", "text": "一直重複同一句話的" },
     { "id": "pushing_tasks", "text": "把事情往後丟的" },
-    { "id": "self_sass", "text": "自己嗆自己的" },
-    { "id": "hope_tmr", "text": "一直幻想明天會更好的" },
-    { "id": "practicing_detach", "text": "練習不在意的" }
+
+    { "id": "mind_exhausted", "text": "腦袋累到轉不動的" },
+    { "id": "emotion_wave", "text": "情緒上上下下的" },
+    { "id": "forced_bright", "text": "被迫維持形象的" },
+    { "id": "daily_mask", "text": "戴著日常面具的" },
+    { "id": "small_explode", "text": "快要小爆炸的" },
+
+    { "id": "auto_smile", "text": "露出自動微笑的" },
+    { "id": "body_tense", "text": "全身緊繃的" },
+    { "id": "noise_inside", "text": "內心噪音太吵的" },
+    { "id": "no_reset_button", "text": "找不到重開機按鈕的" },
+    { "id": "want_pause", "text": "很想按暫停鍵的" }
     ];
 
-    // c：模式
+    // c：情緒／模式（modes）
     const dbC = [
     { "id": "low_balance", "text": "存款見底模式" },
-    { "id": "low_energy_mode", "text": "能量剩 3% 模式" },
+    { "id": "low_energy", "text": "能量剩 3% 模式" },
+    { "id": "repair_mode", "text": "心情維修模式" },
     { "id": "fake_ok", "text": "假裝正常模式" },
-    { "id": "no_social_today", "text": "今天不社交" },
-    { "id": "emotion_repair", "text": "心情維修中" },
-    { "id": "overthinking_loop", "text": "過度思考循環" },
-    { "id": "inspiration_offline", "text": "靈感離線狀態" },
-    { "id": "system_overload", "text": "系統過載" },
-    { "id": "low_buffer", "text": "情緒緩衝不足" },
-    { "id": "do_not_disturb", "text": "請勿打擾模式" },
+    { "id": "no_social", "text": "今天不社交模式" },
 
-    { "id": "procrastination_combo", "text": "拖延連擊" },
-    { "id": "error_code", "text": "內建錯誤代碼" },
-    { "id": "rebooting", "text": "腦袋重開中" },
-    { "id": "charging", "text": "充電中請勿催促" },
-    { "id": "social_empty", "text": "社交流量用盡" },
-    { "id": "hole_buffer", "text": "情緒緩衝槽破洞" },
-    { "id": "avoid_update", "text": "避免更新模式" },
-    { "id": "no_questions", "text": "不想回答任何問題" },
-    { "id": "escape_mode", "text": "深度逃避模式" },
-    { "id": "need_time", "text": "需要一段時間模式" },
+    { "id": "freeze_mode", "text": "整個人凍結模式" },
+    { "id": "overload_mode", "text": "超載閃紅燈模式" },
+    { "id": "empty_mode", "text": "靈魂放空模式" },
+    { "id": "auto_mode", "text": "自動作業模式" },
+    { "id": "fog_mode", "text": "腦袋霧茫茫模式" },
 
-    { "id": "thought_split", "text": "思緒分裂狀態" },
-    { "id": "question_mark", "text": "無限問號模式" },
-    { "id": "self_doubt", "text": "自我懷疑迴圈" },
-    { "id": "attention_shattered", "text": "注意力碎成七片" },
-    { "id": "sleep_mode_stuck", "text": "休眠模式卡住" },
-    { "id": "eyes_offline", "text": "眼神已離線" },
-    { "id": "fake_busy", "text": "假性忙碌狀態" },
-    { "id": "real_world_damage", "text": "遭遇現實傷害" },
-    { "id": "logic_error", "text": "邏輯短路中" },
-    { "id": "silent_world", "text": "靜音世界模式" },
+    { "id": "loop_mode", "text": "同一句話重播模式" },
+    { "id": "avoidance_mode", "text": "極限拖延模式" },
+    { "id": "quiet_panic_mode", "text": "安靜慌張模式" },
+    { "id": "dissociate_mode", "text": "人讓靈魂先下車模式" },
+    { "id": "hyper_alert_mode", "text": "對一切過度警戒模式" },
 
-    { "id": "low_battery", "text": "低電量警示" },
-    { "id": "need_restart", "text": "我需要重開" },
-    { "id": "temporary_retreat", "text": "暫時撤退狀態" },
-    { "id": "thinking_offset", "text": "思考力錯位" },
-    { "id": "brain_lag", "text": "精神 lag" },
-    { "id": "emotion_unzip", "text": "情緒解壓縮中" },
-    { "id": "connection_lost", "text": "過度連線中斷" },
-    { "id": "unsupported", "text": "大腦不支援" },
-    { "id": "memory_insufficient", "text": "內心記憶體不足" },
-    { "id": "data_read_fail", "text": "資料讀取失敗" },
-
-    { "id": "silence_reply", "text": "沉默是回答模式" },
-    { "id": "lazy_engine", "text": "懶惰引擎啟動" },
-    { "id": "motivation_shortage", "text": "動力短缺模式" },
-    { "id": "micro_explosion", "text": "微爆炸前兆" },
-    { "id": "cant_give_up", "text": "想放棄但還不能" },
-    { "id": "out_of_service", "text": "目前不在服務區" },
-    { "id": "run_impulse", "text": "逃跑衝動 90%" },
-    { "id": "system_down", "text": "完全當機" },
-    { "id": "maintenance", "text": "系統維修中" },
-    { "id": "need_blank", "text": "我需要空白" }
+    { "id": "shutdown_mode", "text": "已關機但還在硬撐模式" },
+    { "id": "delay_reply_mode", "text": "訊息延遲回覆模式" },
+    { "id": "fake_focus_mode", "text": "假裝專心模式" },
+    { "id": "emotion_queue_mode", "text": "情緒排隊等處理模式" },
+    { "id": "overthink_ocean", "text": "過度思考海嘯模式" }
     ];
 
-    // d：句型
+    // d：句型（templates）
     const dbD = [
-    { "id": "d1",  "template": "{a}{b}，正處於{c}，正在角落假裝沒事。" },
-    { "id": "d2",  "template": "{a}{b}，在{c}裡努力維持冷靜。" },
-    { "id": "d3",  "template": "{a}{b}，陷在{c}裡像卡住的畫面。" },
-    { "id": "d4",  "template": "{a}{b}，在{c}裡默默滑來滑去。" },
-    { "id": "d5",  "template": "{a}{b}，靠近看會發現全身都寫著{c}。" },
-    { "id": "d6",  "template": "{a}{b}，表面平靜但內心完全是{c}。" },
-    { "id": "d7",  "template": "{a}{b}，試圖逃離{c}卻被現實抓住。" },
-    { "id": "d8",  "template": "{a}{b}，在{c}裡盯著遠方發呆。" },
-    { "id": "d9",  "template": "{a}{b}，以為離開了{c}，結果又掉回去。" },
-    { "id": "d10", "template": "{a}{b}，拖著{c}走來走去。" },
+    { "id": "d1", "template": "{a}{b}，正處於{c}，站在角落假裝自己很忙。" },
+    { "id": "d2", "template": "{a}{b}，把自己塞進{c}，假裝這樣就安全了。" },
+    { "id": "d3", "template": "{a}{b}，在{c}裡面繞來繞去，卻找不到出口。" },
+    { "id": "d4", "template": "{a}{b}，背後默默貼著「{c}」的標籤。" },
+    { "id": "d5", "template": "{a}{b}，假裝自己不是{c}的一部分。" },
 
-    { "id": "d11", "template": "{a}{b}，正在努力把{c}塞進口袋裡。" },
-    { "id": "d12", "template": "{a}{b}，邊處理{c}邊假裝很淡定。" },
-    { "id": "d13", "template": "{a}{b}，在{c}裡試著重新開機。" },
-    { "id": "d14", "template": "{a}{b}，正在跟{c}進行心理協商。" },
-    { "id": "d15", "template": "{a}{b}，抱著{c}坐在原地不動。" },
+    { "id": "d6", "template": "{a}{b}，正在把{c}塞進抽屜裡。" },
+    { "id": "d7", "template": "{a}{b}，在{c}裡面默默重開機。" },
+    { "id": "d8", "template": "{a}{b}，一邊抱著{c}一邊滑手機。" },
+    { "id": "d9", "template": "{a}{b}，在{c}旁邊裝作若無其事。" },
+    { "id": "d10", "template": "{a}{b}，踩在{c}上努力假裝穩定。" },
+
+    { "id": "d11", "template": "{a}{b}，被{c}纏住走不太動。" },
+    { "id": "d12", "template": "{a}{b}，把{c}裝進透明瓶子裡帶著走。" },
+    { "id": "d13", "template": "{a}{b}，在寫著「{c}」的房間裡打轉。" },
+    { "id": "d14", "template": "{a}{b}，把{c}摺成紙飛機丟出去，又飛回來。" },
+    { "id": "d15", "template": "{a}{b}，努力說服自己{c}沒那麼嚴重。" },
+
     { "id": "d16", "template": "{a}{b}，被{c}纏住動都不能動。" },
     { "id": "d17", "template": "{a}{b}，拖著{c}一步一步往前挪。" },
     { "id": "d18", "template": "{a}{b}，在{c}裡慢慢耗盡耐心。" },
@@ -478,32 +487,11 @@
     { "id": "d26", "template": "{a}{b}，坐在{c}裡讓時間流走。" },
     { "id": "d27", "template": "{a}{b}，正把{c}塞進盒子裡假裝不會爆。" },
     { "id": "d28", "template": "{a}{b}，努力假裝沒看到{c}。" },
-    { "id": "d29", "template": "{a}{b}，在{c}裡寫下一份求生備忘錄。" },
-    { "id": "d30", "template": "{a}{b}，在{c}裡假裝自己是正常人。" },
-
-    { "id": "d31", "template": "{a}{b}，費力拖著{c}爬樓梯。" },
-    { "id": "d32", "template": "{a}{b}，徘徊在{c}的邊界上。" },
-    { "id": "d33", "template": "{a}{b}，正在跟{c}拔河。" },
-    { "id": "d34", "template": "{a}{b}，在{c}裡尋找出口。" },
-    { "id": "d35", "template": "{a}{b}，被{c}壓得扁扁的。" },
-    { "id": "d36", "template": "{a}{b}，坐在{c}裡反省人生。" },
-    { "id": "d37", "template": "{a}{b}，假裝沒看到{c}的提示訊息。" },
-    { "id": "d38", "template": "{a}{b}，在{c}裡抱著行事曆歎氣。" },
-    { "id": "d39", "template": "{a}{b}，或說是被{c}拖著跑。" },
-    { "id": "d40", "template": "{a}{b}，一邊{c}一邊深呼吸。" },
-
-    { "id": "d41", "template": "{a}{b}，正努力把{c}揉成一團丟掉。" },
-    { "id": "d42", "template": "{a}{b}，在{c}裡短暫停機。" },
-    { "id": "d43", "template": "{a}{b}，抬頭看著天花板思考{c}。" },
-    { "id": "d44", "template": "{a}{b}，在{c}裡進入假死狀態。" },
-    { "id": "d45", "template": "{a}{b}，把{c}塞進口袋裡裝鎮定。" },
-    { "id": "d46", "template": "{a}{b}，把{c}貼在胸口當提醒。" },
-    { "id": "d47", "template": "{a}{b}，腳尖碰著地板，滿是{c}的力量。" },
-    { "id": "d48", "template": "{a}{b}，排演沒有{c}的未來。" },
-    { "id": "d49", "template": "{a}{b}，打開設定面板卻只看到{c}。" },
-    { "id": "d50", "template": "{a}{b}，和{c}一起安靜坐著。" }
+    { "id": "d29", "template": "{a}{b}，在寫滿{c}的小角落發呆。" },
+    { "id": "d30", "template": "{a}{b}，和{c}一起坐上沒有目的地的公車。" }
     ];
 
+    // 抽一個元素
     function pickRandom(list) {
       return list[Math.floor(Math.random() * list.length)];
     }
@@ -519,7 +507,9 @@
         .replace("{b}", b.text)
         .replace("{c}", c.text);
 
-      return { a, b, c, d, sentence };
+      return {
+        a, b, c, d, sentence
+      };
     }
 
     const valueA = document.getElementById("valueA");
@@ -546,32 +536,32 @@
     });
 
     // Unsplash：有錯就換備援圖
-const unsplashImg1 = document.getElementById("unsplashImg1");
-const unsplashImg2 = document.getElementById("unsplashImg2");
-const refreshUnsplashBtn = document.getElementById("refreshUnsplashBtn");
+    const unsplashImg1 = document.getElementById("unsplashImg1");
+    const unsplashImg2 = document.getElementById("unsplashImg2");
+    const refreshUnsplashBtn = document.getElementById("refreshUnsplashBtn");
 
-function setUnsplash(imgEl) {
-  // 若 Unsplash 掛掉，用 picsum 備援
-  imgEl.onerror = () => {
-    imgEl.onerror = null;
-    imgEl.src = "https://picsum.photos/900/650?random=" + Date.now() + Math.random();
-  };
+    function setUnsplash(imgEl) {
+      // 若 Unsplash 掛掉，用 picsum 備援
+      imgEl.onerror = () => {
+        imgEl.onerror = null;
+        imgEl.src = "https://picsum.photos/900/650?random=" + Date.now() + Math.random();
+      };
 
-  const ts = Date.now() + Math.random();
-  imgEl.src =
-    "https://source.unsplash.com/900x650/?abstract,emotion,texture&sig=" + ts;
-}
+      const ts = Date.now() + Math.random();
+      // 🔥 這裡已改成「完全隨機、不下關鍵字」版本
+      imgEl.src =
+        "https://source.unsplash.com/random/900x650?sig=" + ts;
+    }
 
-function refreshUnsplash() {
-  setUnsplash(unsplashImg1);
-  setUnsplash(unsplashImg2);
-}
+    function refreshUnsplash() {
+      setUnsplash(unsplashImg1);
+      setUnsplash(unsplashImg2);
+    }
 
-refreshUnsplashBtn.addEventListener("click", refreshUnsplash);
+    refreshUnsplashBtn.addEventListener("click", refreshUnsplash);
 
-// 進頁面時先載一組
-refreshUnsplash();
-
+    // 進頁面時先載一組
+    refreshUnsplash();
   </script>
 </body>
 </html>
