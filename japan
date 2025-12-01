@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <title>日文學習卡片｜MaLana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #f4f4f7;
+        color: #222;
+      }
+
+      .app-header {
+        padding: 1.2rem 1.5rem;
+        background: #303f9f;
+        color: #fff;
+      }
+
+      .app-header h1 {
+        margin: 0 0 0.25rem;
+        font-size: 1.4rem;
+      }
+
+      .app-main {
+        max-width: 800px;
+        margin: 1.5rem auto;
+        padding: 0 1rem 2rem;
+      }
+
+.controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .controls select,
+      .controls button {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.95rem;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.2rem 1.4rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        margin-bottom: 1rem;
+      }
+
+      .card-lesson {
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .card-type {
+        font-size: 0.8rem;
+        color: #999;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-jp {
+        font-size: 1.4rem;
+        color: #444;
+        margin-bottom: 0.4rem;
+      }
+
+      .card-kana {
+        font-size: 1.8rem;
+        color: #000000;
+        margin-top: 0.2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .card-romaji {
+        font-size: 0.8rem;
+        color: #aaaaaa;
+        margin-bottom: 0.25rem;
+      }
+
+      .card-zh {
+        font-size: 0.8rem;
+        color:#aaaaaa;
+        margin-bottom: 0.25rem;
+      }
+
+      .card-note {
+        font-size: 0.85rem;
+        color: #888;
+        margin-bottom: 0.6rem;
+      }
+
+      .card-actions {
+        margin-bottom: 0.6rem;
+      }
+
+      .card-actions button {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .card-stars {
+        font-size: 0.9rem;
+      }
+
+      .card-stars .star {
+        cursor: pointer;
+        font-size: 1.8rem;
+        margin-left: 0.25rem;
+        color: #ccc;
+        padding: 0.15rem 0.35rem;
+        display: inline-block;
+      }
+
+      .card-stars .star.active {
+        color: #ffb300;
+      }
+
+      .progress {
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      #cycleStatus {
+        margin-top: 0.3rem;
+        font-weight: 600;
+      }
+
+      .app-footer {
+        text-align: center;
+        padding: 0.8rem 1rem 1.2rem;
+        font-size: 0.75rem;
+        color: #777;
+      }
+
+      @media (max-width: 480px) {
+        .card-jp {
+          font-size: 1.4rem;
+        }
+      }
+/* --- 重設按鈕固定在右下角（白卡外） --- */
+.reset-fixed {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+}
+
+.reset-fixed button {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+}
+
+#nextBtn {
+    padding: 2rem 2.2rem; /* 上下、左右內距 */
+    font-size: 1rem;
+    min-width: 300px;      /* ★★★ 這行就是加寬按鈕的關鍵 ★★★ */
+    text-align: center;
+}
+
+    </style>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>日文學習卡片</h1>
+      <p>隨機抽卡＋星星難度＋發音 🔊</p>
+    </header>
+
+    <main class="app-main">
+      <section class="controls">
+  <label>
+    選擇課程：
+    <select id="lessonSelect">
+      <option value="all">全部課程（隨機）</option>
+      <!-- JS 會自動塞入課程 -->
+    </select>
+  </label>
+
+  <button id="nextBtn">抽下一張卡片 🎴</button>
+ 
+
+  <!-- ⭐⭐⭐ 把星星移到這裡 ⭐⭐⭐ -->
+  <div class="card-stars" style="margin-top: 0.6rem;">
+    難度：
+    <span class="star" data-star="1">★</span>
+    <span class="star" data-star="2">★</span>
+    <span class="star" data-star="3">★</span>
+  </div>
+</section>
+
+<section class="card" id="card">
+  <div class="card-lesson" id="cardLesson"></div>
+  <div class="card-type" id="cardType"></div>
+
+  <div class="card-jp" id="cardJp">請先按「抽下一張卡片」</div>
+  <div class="card-kana" id="cardKana"></div>
+  <div class="card-romaji" id="cardRomaji"></div>
+  <div class="card-zh" id="cardZh"></div>
+  <div class="card-note" id="cardNote"></div>
+
+<div class="reset-fixed">
+    <button id="resetCycleBtn">重設學習循環</button>
+</div>
+
+  <div class="card-actions">
+    <button id="audioBtn">🔊 發音</button>
+  </div>
+</section>
+
+      <section class="progress">
+        <div id="cycleProgressText">本循環進度：0 / 0</div>
+        <div id="cycleStatus"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <small>學習紀錄存在瀏覽器 localStorage，不會被洗掉 ✨</small>
+    </footer>
+
+    <!-- ====== 這一段：你的 1～13 課卡片資料 ====== -->
+    <script>
+      const lessons = [
+        {
+          lessonId: 1,
+          title: "第1課｜なにをしていますか",
+          cards: [
+            {
+              type: "sentence",
+              jp: "なにを しているの。",
+              kana: "なにを しているの。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "なにを しているの。"
+            },
+            {
+              type: "sentence",
+              jp: "なにを していますか。",
+              kana: "なにを していますか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "なにを していますか。"
+            }
+          ]
+        },
+        {
+          lessonId: 2,
+          title: "第2課｜なにをしていますか（ごはん・バナナ）",
+          cards: [
+            {
+              type: "sentence",
+              jp: "なにを しているの。",
+              kana: "なにを しているの。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "なにを しているの。"
+            },
+            {
+              type: "sentence",
+              jp: "あさごはん を たべています。",
+              kana: "あさごはん を たべています。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "あさごはん を たべています。"
+            },
+            {
+              type: "sentence",
+              jp: "なにを しているの。",
+              kana: "なにを しているの。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "なにを しているの。"
+            },
+            {
+              type: "sentence",
+              jp: "バナナ を たべています。",
+              kana: "バナナ を たべています。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "バナナ を たべています。"
+            }
+          ]
+        },
+        {
+          lessonId: 3,
+          title: "第3課｜これはなんですか",
+          cards: [
+            {
+              type: "sentence",
+              jp: "これはなんだ。",
+              kana: "これはなんだ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "これはなんだ。"
+            },
+            {
+              type: "sentence",
+              jp: "バナナです。",
+              kana: "バナナです。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "バナナです。"
+            },
+            {
+              type: "sentence",
+              jp: "これはなんですか。",
+              kana: "これはなんですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "これはなんですか。"
+            },
+            {
+              type: "sentence",
+              jp: "バナナです。",
+              kana: "バナナです。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "バナナです。"
+            },
+            {
+              type: "sentence",
+              jp: "これはなにかな。",
+              kana: "これはなにかな。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "これはなにかな。"
+            },
+            {
+              type: "sentence",
+              jp: "これはバナナだ。",
+              kana: "これはバナナだ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "これはバナナだ。"
+            },
+            {
+              type: "sentence",
+              jp: "これはなんだろう。",
+              kana: "これはなんだろう。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "これはなんだろう。"
+            },
+            {
+              type: "sentence",
+              jp: "これはバナナ。",
+              kana: "これはバナナ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "これはバナナ。"
+            }
+          ]
+        },
+        {
+          lessonId: 4,
+          title: "第4課｜どこですか",
+          cards: [
+            {
+              type: "sentence",
+              jp: "このスキーじょうはどこですか。",
+              kana: "このスキーじょうはどこですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "このスキーじょうはどこですか。"
+            },
+            {
+              type: "sentence",
+              jp: "このホテルはどこですか。",
+              kana: "このホテルはどこですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "このホテルはどこですか。"
+            },
+            {
+              type: "sentence",
+              jp: "トイレはどこですか。",
+              kana: "トイレはどこですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "トイレはどこですか。"
+            },
+            {
+              type: "sentence",
+              jp: "けいたいはどこ。",
+              kana: "けいたいはどこ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "けいたいはどこ。"
+            },
+            {
+              type: "sentence",
+              jp: "マスクはどこ。",
+              kana: "マスクはどこ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "マスクはどこ。"
+            }
+          ]
+        },
+        {
+          lessonId: 5,
+          title: "第5課｜ここだ",
+          cards: [
+            {
+              type: "sentence",
+              jp: "ここだ。",
+              kana: "ここだ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "ここだ。"
+            },
+            {
+              type: "sentence",
+              jp: "ここです。",
+              kana: "ここです。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "ここです。"
+            },
+            {
+              type: "sentence",
+              jp: "おねえさん、どこかな。",
+              kana: "おねえさん、どこかな。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おねえさん、どこかな。"
+            },
+            {
+              type: "sentence",
+              jp: "バナナはどこ。",
+              kana: "バナナはどこ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "バナナはどこ。"
+            }
+          ]
+        },
+        {
+          lessonId: 6,
+          title: "第6課｜おめでとう",
+          cards: [
+            {
+              type: "sentence",
+              jp: "おたんじょうび、おめでとう。",
+              kana: "おたんじょうび、おめでとう。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おたんじょうび、おめでとう。"
+            },
+            {
+              type: "sentence",
+              jp: "おめでとうございます。",
+              kana: "おめでとうございます。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おめでとうございます。"
+            },
+            {
+              type: "sentence",
+              jp: "しゅっさん、おめでとう。",
+              kana: "しゅっさん、おめでとう。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "しゅっさん、おめでとう。"
+            }
+          ]
+        },
+        {
+          lessonId: 7,
+          title: "第7課｜どうしたの",
+          cards: [
+            {
+              type: "sentence",
+              jp: "どうしたの？",
+              kana: "どうしたの？",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "どうしたの？"
+            },
+            {
+              type: "sentence",
+              jp: "どうしましたか？",
+              kana: "どうしましたか？",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "どうしましたか？"
+            },
+            {
+              type: "sentence",
+              jp: "ちょっとつかれた。",
+              kana: "ちょっとつかれた。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "ちょっとつかれた。"
+            }
+          ]
+        },
+        {
+          lessonId: 8,
+          title: "第8課｜いたい",
+          cards: [
+            {
+              type: "sentence",
+              jp: "いたい。",
+              kana: "いたい。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "いたい。"
+            },
+            {
+              type: "sentence",
+              jp: "だいじょうぶですか。",
+              kana: "だいじょうぶですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "だいじょうぶですか。"
+            },
+            {
+              type: "sentence",
+              jp: "だいじょうぶです。",
+              kana: "だいじょうぶです。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "だいじょうぶです。"
+            },
+            {
+              type: "sentence",
+              jp: "いたい。",
+              kana: "いたい。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "いたい。"
+            },
+            {
+              type: "sentence",
+              jp: "どうしたの。",
+              kana: "どうしたの。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "どうしたの。"
+            },
+            {
+              type: "sentence",
+              jp: "あし を ぶつけて しまいました。",
+              kana: "あし を ぶつけて しまいました。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "あし を ぶつけて しまいました。"
+            },
+            {
+              type: "sentence",
+              jp: "だいじょうぶですか。",
+              kana: "だいじょうぶですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "だいじょうぶですか。"
+            },
+            {
+              type: "sentence",
+              jp: "だいじょうぶです。",
+              kana: "だいじょうぶです。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "だいじょうぶです。"
+            }
+          ]
+        },
+        {
+          lessonId: 9,
+          title: "第9課｜おやすみ",
+          cards: [
+            {
+              type: "sentence",
+              jp: "おやすみ。",
+              kana: "おやすみ。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おやすみ。"
+            },
+            {
+              type: "sentence",
+              jp: "おやすみなさい。",
+              kana: "おやすみなさい。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おやすみなさい。"
+            }
+          ]
+        },
+        {
+          lessonId: 10,
+          title: "第10課｜～、お願いします",
+          cards: [
+            {
+              type: "sentence",
+              jp: "サンドイッチ、 おねがいします。",
+              kana: "サンドイッチ、 おねがいします。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "サンドイッチ、 おねがいします。"
+            },
+            {
+              type: "sentence",
+              jp: "おにぎり、 おねがいします。",
+              kana: "おにぎり、 おねがいします。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おにぎり、 おねがいします。"
+            },
+            {
+              type: "sentence",
+              jp: "おかいけい、 おねがいします。",
+              kana: "おかいけい、 おねがいします。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おかいけい、 おねがいします。"
+            }
+          ]
+        },
+        {
+          lessonId: 11,
+          title: "第11課｜どっちがいいですか",
+          cards: [
+            {
+              type: "sentence",
+              jp: "コーヒーと おちゃ、 どっちが いいですか。",
+              kana: "コーヒーと おちゃ、 どっちが いいですか。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "コーヒーと おちゃ、 どっちが いいですか。"
+            },
+            {
+              type: "sentence",
+              jp: "コーヒー、 おねがいします。",
+              kana: "コーヒー、 おねがいします。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "コーヒー、 おねがいします。"
+            },
+            {
+              type: "sentence",
+              jp: "おちゃ、 おねがいします。",
+              kana: "おちゃ、 おねがいします。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "おちゃ、 おねがいします。"
+            },
+            {
+              type: "sentence",
+              jp: "ながい つりざお と みじかい つりざお、 どっちが いい？",
+              kana: "ながい つりざお と みじかい つりざお、 どっちが いい？",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "ながい つりざお と みじかい つりざお、 どっちが いい？"
+            },
+            {
+              type: "sentence",
+              jp: "どっちが いい？",
+              kana: "どっちが いい？",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "どっちが いい？"
+            },
+            {
+              type: "sentence",
+              jp: "こっち。",
+              kana: "こっち。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "こっち。"
+            }
+          ]
+        },
+        {
+          lessonId: 12,
+          title: "第12課｜くらべてみよう",
+          cards: [
+            {
+              type: "sentence",
+              jp: "どっち が たかい かな。",
+              kana: "どっち が たかい かな。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "どっち が たかい かな。"
+            },
+            {
+              type: "sentence",
+              jp: "くらべて みよう。",
+              kana: "くらべて みよう。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "くらべて みよう。"
+            },
+            {
+              type: "sentence",
+              jp: "あっちが たかくて、 こっちが ひくい。",
+              kana: "あっちが たかくて、 こっちが ひくい。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "あっちが たかくて、 こっちが ひくい。"
+            },
+            {
+              type: "sentence",
+              jp: "どっち が ながい かな。",
+              kana: "どっち が ながい かな。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "どっち が ながい かな。"
+            },
+            {
+              type: "sentence",
+              jp: "くらべて みよう。",
+              kana: "くらべて みよう。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "くらべて みよう。"
+            },
+            {
+              type: "sentence",
+              jp: "あっちが ながくて、 こっちが みじかい。",
+              kana: "あっちが ながくて、 こっちが みじかい。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "あっちが ながくて、 こっちが みじかい。"
+            }
+          ]
+        },
+        {
+          lessonId: 13,
+          title: "第13課｜ずいぶん散らかっているね",
+          cards: [
+            {
+              type: "sentence",
+              jp: "へやが ずいぶん ちらかっているね。",
+              kana: "へやが ずいぶん ちらかっているね。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "へやが ずいぶん ちらかっているね。"
+            },
+            {
+              type: "sentence",
+              jp: "ずいぶん ちらかっているね。",
+              kana: "ずいぶん ちらかっているね。",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "ずいぶん ちらかっているね。"
+            },
+            {
+              type: "sentence",
+              jp: "ダイニングテーブル",
+              kana: "ダイニングテーブル",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "ダイニングテーブル"
+            },
+            {
+              type: "sentence",
+              jp: "リビングルーム",
+              kana: "リビングルーム",
+              romaji: "",
+              zh: "",
+              note: "",
+              audioText: "リビングルーム"
+            }
+          ]
+        }
+      ];
+
+    </script>
+
+    <!-- ====== 下面這段：隨機抽卡 / 星星權重 / 循環 / 發音邏輯，請保持原樣 ====== -->
+    <script>
+      const STORAGE_KEY = "jpStudyState_v1";
+
+      let state = {
+        cardDifficulty: {}, // { uid: 0~3 }
+        cycleSeen: {} // { uid: true }
+      };
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            state = {
+              cardDifficulty: parsed.cardDifficulty || {},
+              cycleSeen: parsed.cycleSeen || {}
+            };
+          }
+        } catch (e) {
+          console.warn("讀取狀態失敗，使用預設", e);
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      // 把所有卡片整理成 flat 陣列，順便自動給 uid
+      const allCards = [];
+      lessons.forEach((lesson) => {
+        lesson.cards.forEach((card, index) => {
+          const uid = `${lesson.lessonId}-${index + 1}`;
+          allCards.push({
+            ...card,
+            lessonId: lesson.lessonId,
+            lessonTitle: lesson.title,
+            uid
+          });
+        });
+      });
+
+      // DOM
+      const lessonSelect = document.getElementById("lessonSelect");
+      const nextBtn = document.getElementById("nextBtn");
+      const resetCycleBtn = document.getElementById("resetCycleBtn");
+
+      const cardLesson = document.getElementById("cardLesson");
+      const cardType = document.getElementById("cardType");
+      const cardJp = document.getElementById("cardJp");
+      const cardKana = document.getElementById("cardKana");
+      const cardRomaji = document.getElementById("cardRomaji");
+      const cardZh = document.getElementById("cardZh");
+      const cardNote = document.getElementById("cardNote");
+      const cycleProgressText = document.getElementById("cycleProgressText");
+      const cycleStatus = document.getElementById("cycleStatus");
+      const audioBtn = document.getElementById("audioBtn");
+      const starElems = Array.from(
+        document.querySelectorAll(".card-stars .star")
+      );
+
+      let currentCard = null;
+
+      function initLessonSelect() {
+        lessons.forEach((lesson) => {
+          const opt = document.createElement("option");
+          opt.value = String(lesson.lessonId);
+          opt.textContent = lesson.title;
+          lessonSelect.appendChild(opt);
+        });
+      }
+
+      function getCurrentPool() {
+        const value = lessonSelect.value;
+        if (value === "all") return allCards;
+        const lessonId = Number(value);
+        return allCards.filter((c) => c.lessonId === lessonId);
+      }
+
+      // 權重抽卡：基礎 1 + 星星加權 + 本輪未看過加權
+      function pickRandomCard() {
+        const pool = getCurrentPool();
+        if (pool.length === 0) return null;
+
+        const weights = [];
+        let totalWeight = 0;
+
+        pool.forEach((card) => {
+          const difficulty = state.cardDifficulty[card.uid] || 0; // 0~3
+          let weight = 1 + difficulty * 1.5;
+
+          if (!state.cycleSeen[card.uid]) {
+            weight += 2; // 這輪還沒出現過，優先
+          }
+
+          weights.push({ card, weight });
+          totalWeight += weight;
+        });
+
+        let r = Math.random() * totalWeight;
+        for (const w of weights) {
+          if (r < w.weight) return w.card;
+          r -= w.weight;
+        }
+        return weights[weights.length - 1].card;
+      }
+
+      function updateCardUI(card) {
+        if (!card) {
+          cardLesson.textContent = "";
+          cardType.textContent = "";
+          cardJp.textContent = "沒有卡片";
+          cardKana.textContent = "";
+          cardRomaji.textContent = "";
+          cardZh.textContent = "";
+          cardNote.textContent = "";
+          starElems.forEach((el) => el.classList.remove("active"));
+          return;
+        }
+
+        cardLesson.textContent = card.lessonTitle;
+        cardType.textContent = card.type === "word" ? "【單字】" : "【句子】";
+        cardJp.textContent = card.jp;
+        cardKana.textContent = card.kana || "";
+        cardRomaji.textContent = card.romaji || "";
+        cardZh.textContent = card.zh || "";
+        cardNote.textContent = card.note || "";
+
+        const stars = state.cardDifficulty[card.uid] || 0;
+        starElems.forEach((el) => {
+          const s = Number(el.dataset.star);
+          if (s <= stars) el.classList.add("active");
+          else el.classList.remove("active");
+        });
+
+        // 標記為本輪已出現
+        state.cycleSeen[card.uid] = true;
+        saveState();
+        updateProgressUI();
+      }
+
+      function updateProgressUI() {
+        const pool = getCurrentPool();
+        const total = pool.length;
+        const seenCount = pool.filter((c) => state.cycleSeen[c.uid]).length;
+        cycleProgressText.textContent = `本循環進度：${seenCount} / ${total}`;
+
+        if (total > 0 && seenCount === total) {
+          cycleStatus.textContent =
+            "✅ 這個範圍裡的卡片本輪都看過囉，可以重設循環或改別的課。";
+        } else {
+          cycleStatus.textContent = "";
+        }
+      }
+
+      // 事件
+      nextBtn.addEventListener("click", () => {
+        const card = pickRandomCard();
+        currentCard = card;
+        updateCardUI(card);
+      });
+
+      resetCycleBtn.addEventListener("click", () => {
+        state.cycleSeen = {};
+        saveState();
+        updateProgressUI();
+      });
+
+      lessonSelect.addEventListener("change", () => {
+        updateProgressUI();
+      });
+
+      starElems.forEach((el) => {
+        el.addEventListener("click", () => {
+          if (!currentCard) return;
+          const starValue = Number(el.dataset.star);
+          const current = state.cardDifficulty[currentCard.uid] || 0;
+          const newValue = current === starValue ? 0 : starValue; // 再點同一顆就歸零
+          state.cardDifficulty[currentCard.uid] = newValue;
+          saveState();
+          updateCardUI(currentCard);
+        });
+      });
+
+      audioBtn.addEventListener("click", () => {
+        if (!currentCard) return;
+        if (!("speechSynthesis" in window)) {
+          alert("這個瀏覽器不支援語音發音 😭");
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(
+          currentCard.audioText || currentCard.jp
+        );
+        utterance.lang = "ja-JP";
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      });
+
+      // 啟動
+      loadState();
+      initLessonSelect();
+      updateProgressUI();
+    </script>
+  </body>
+</html>
+
+
+
+
