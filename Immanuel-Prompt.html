@@ -185,21 +185,50 @@
     <small>用來鎖「展示台長怎樣」，避免模型亂加奇怪底座。</small>
   </div>
 
-  <div class="field">
-    <label for="tableSelect">桌面／檯面材質</label>
-    <select id="tableSelect">
-      <option value="auto">依場景自動</option>
-      <option value="solid_wood">實木桌面</option>
-      <option value="walnut_wood">深色胡桃木</option>
-      <option value="light_oak">淺色橡木</option>
-      <option value="matte_marble">霧面大理石</option>
-      <option value="polished_marble">拋光大理石</option>
-      <option value="concrete">清水模混凝土</option>
-      <option value="dark_stone">深色石材</option>
-    </select>
-    <small>只鎖桌面質感；若你選白底棚拍，建議用「依場景自動」。</small>
-  </div>
+<div class="field">
+  <label for="tableSelect">桌面／檯面材質</label>
+  <select id="tableSelect">
+    <option value="auto">依場景自動</option>
+
+    <!-- 木質 -->
+    <option value="solid_wood">實木桌面（自然木紋）</option>
+    <option value="walnut_wood">深色胡桃木（高級沉穩）</option>
+    <option value="light_oak">淺色橡木（明亮北歐）</option>
+    <option value="butcher_block">拼接木砧板檯面（廚房島台感）</option>
+    <option value="black_wood">霧面黑木桌（現代極簡）</option>
+
+    <!-- 石材 / 人造石 -->
+    <option value="matte_marble">霧面大理石（低反光）</option>
+    <option value="polished_marble">拋光大理石（清晰反射）</option>
+    <option value="white_quartz">白色石英石（乾淨電商感）</option>
+    <option value="gray_quartz">灰色石英石（中性耐看）</option>
+    <option value="travertine">洞石（米色溫潤、精品家居感）</option>
+    <option value="slate">板岩（質樸、細緻紋理）</option>
+    <option value="dark_stone">深色石材（高對比精品展示）</option>
+    <option value="terrazzo">磨石子（設計品牌常見）</option>
+
+    <!-- 水泥 / 工業 -->
+    <option value="concrete">清水模混凝土（工業極簡）</option>
+    <option value="microcement">微水泥（更細緻、無縫面）</option>
+
+    <!-- 磁磚 / 陶瓷 -->
+    <option value="white_tile">白色磁磚檯面（乾淨廚房感）</option>
+    <option value="subway_tile">地鐵磚風格（歐美廚房常見）</option>
+    <option value="ceramic_slab">大板陶瓷檯面（高級、紋理穩）</option>
+
+    <!-- 金屬 / 玻璃 -->
+    <option value="stainless_steel">不鏽鋼檯面（商用廚房、俐落反光）</option>
+    <option value="brushed_metal_surface">拉絲金屬檯面（反光受控）</option>
+    <option value="glass_table">玻璃桌面（乾淨反射、偏現代）</option>
+
+    <!-- 布料 / 拍攝襯底 -->
+    <option value="linen_cloth">亞麻桌布（生活感、柔和）</option>
+    <option value="cotton_cloth">棉布桌布（更日常）</option>
+    <option value="paper_backdrop">攝影紙背景（乾淨、規格照）</option>
+  </select>
+  <small>只鎖桌面質感；白底棚拍建議用「依場景自動」。若你有展示台選項，桌面可保持 auto 以免互相打架。</small>
 </div>
+
 
 <div class="actions">
   <button class="primary" onclick="generatePrompt()">產生指令</button>
@@ -380,24 +409,71 @@ const pedestalMap = {
 };
 
 // ================= 桌面／檯面（Tabletop） =================
-// 適用於餐桌、吧台、生活情境；白棚拍可用 auto
+// 鎖「接觸面質感」，不改產品、不加戲
 const tableMap = {
   auto: "",
+
+  // ===== 木質 =====
   solid_wood:
-    "The product rests on a solid wood tabletop with natural grain, finished in a soft matte sheen.",
+    "The product rests on a solid wood tabletop with natural grain and a soft matte finish, clean and understated.",
   walnut_wood:
     "The product rests on a dark walnut wood surface with rich grain and a warm, premium tone.",
   light_oak:
-    "The product rests on a light oak tabletop with subtle grain and a bright, airy feel.",
+    "The product rests on a light oak tabletop with subtle grain and a bright, Scandinavian feel.",
+  butcher_block:
+    "The product rests on a butcher-block style wooden countertop with visible wood joins, common in modern kitchen island scenes.",
+  black_wood:
+    "The product rests on a matte black wooden surface with minimal visible grain, creating a modern, minimalist look.",
+
+  // ===== 石材 / 人造石 =====
   matte_marble:
-    "The product rests on a matte marble surface with soft veining and minimal reflections.",
+    "The product rests on a matte marble surface with soft veining and very low reflectivity.",
   polished_marble:
     "The product rests on a polished marble surface with crisp reflections and elegant veining.",
+  white_quartz:
+    "The product rests on a white quartz stone countertop, clean, bright, and commonly seen in premium kitchen settings.",
+  gray_quartz:
+    "The product rests on a light gray quartz surface with a neutral, modern appearance.",
+  travertine:
+    "The product rests on a travertine stone surface with warm beige tones and subtle natural pores, often seen in high-end interior photography.",
+  slate:
+    "The product rests on a slate stone surface with fine texture and a muted, natural look.",
+  dark_stone:
+    "The product rests on a dark stone surface with a dense appearance and controlled highlights, suitable for premium product display.",
+  terrazzo:
+    "The product rests on a terrazzo surface with fine aggregate details, commonly used in contemporary design-focused interiors.",
+
+  // ===== 水泥 / 工業 =====
   concrete:
     "The product rests on a smooth concrete surface with a modern, industrial character.",
-  dark_stone:
-    "The product rests on a dark stone surface with a dense, premium appearance and controlled highlights."
+  microcement:
+    "The product rests on a microcement surface with a seamless, refined concrete look and subtle texture.",
+
+  // ===== 磁磚 / 陶瓷 =====
+  white_tile:
+    "The product rests on a clean white tiled surface, commonly seen in bright kitchen environments.",
+  subway_tile:
+    "The product rests on a subway-tile surface, evoking a classic European or American kitchen setting.",
+  ceramic_slab:
+    "The product rests on a large-format ceramic slab surface with refined texture and controlled reflections.",
+
+  // ===== 金屬 / 玻璃 =====
+  stainless_steel:
+    "The product rests on a stainless steel countertop with soft industrial reflections, typical of professional kitchens.",
+  brushed_metal_surface:
+    "The product rests on a brushed metal surface with fine grain and subdued reflections.",
+  glass_table:
+    "The product rests on a clear glass tabletop with clean reflections and a modern, minimal feel.",
+
+  // ===== 布料 / 拍攝襯底 =====
+  linen_cloth:
+    "The product rests on a linen tablecloth with visible fabric texture, adding a soft lifestyle feel.",
+  cotton_cloth:
+    "The product rests on a cotton fabric table covering with a natural, everyday appearance.",
+  paper_backdrop:
+    "The product rests on a clean paper backdrop surface, commonly used in studio-style product photography."
 };
+
 
 // ================= 加元素（Gift Box / Accessories / Decor） =================
 // 用於「禮盒展示檯」「精品展示」等情境，讓模型知道哪些元素可以出現、而且放在哪裡
