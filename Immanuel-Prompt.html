@@ -76,6 +76,55 @@
   </div>
 </div>
 
+<!-- 加元素：禮盒 / 配件 / 裝飾 + 方位 -->
+<div class="row">
+  <div class="field">
+    <label for="giftboxSelect">禮盒（是否出現 / 類型）</label>
+    <select id="giftboxSelect">
+      <option value="none">不出現禮盒</option>
+      <option value="premium_closed">高級禮盒（閉合，不拆開）</option>
+      <option value="simple_closed">簡約紙盒（閉合，不拆開）</option>
+      <option value="sleeve_packaging">外套紙套包裝（閉合）</option>
+      <option value="carry_bag">提袋包裝（乾淨、無品牌字樣）</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="accessorySelect">配件（搭配物）</label>
+    <select id="accessorySelect">
+      <option value="none">不加配件</option>
+      <option value="minimal">少量配件（1–2 件，低存在感）</option>
+      <option value="set">成套配件（2–4 件，整齊排列）</option>
+      <option value="functional">功能型配件（例如杯蓋、吸管、量杯等，乾淨呈現）</option>
+      <option value="lifestyle">生活感配件（例如餐具、杯墊等，極簡）</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="decorSelect">相關裝飾（質感點綴）</label>
+    <select id="decorSelect">
+      <option value="none">不加裝飾</option>
+      <option value="ribbon_fabric">緞帶 / 布料（極簡，質感）</option>
+      <option value="tissue_paper">薄紙 / 包裝紙（柔和折痕）</option>
+      <option value="dried_botanical">乾燥植物（少量、模糊背景）</option>
+      <option value="metal_tray">金屬托盤（乾淨、反光受控）</option>
+      <option value="ceramic_plate">陶瓷盤（霧面、簡約）</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="placementSelect">元素方位（相對產品）</label>
+    <select id="placementSelect">
+      <option value="behind">在產品後方（最安全）</option>
+      <option value="around">在產品四周（均衡圍繞）</option>
+      <option value="side">在一側（配合留白構圖）</option>
+      <option value="foreground">在前景（低比例、不可遮擋主體）</option>
+      <option value="stacked">產品後方堆疊展示（有層次）</option>
+    </select>
+    <small>避免遮到產品；參考圖的產品必須是主角。</small>
+  </div>
+</div>
+
 <!-- 視角 + 構圖 + 比例 + 材質 -->
 <div class="row">
   <div class="field">
@@ -100,12 +149,17 @@
   <div class="field">
     <label for="ratioSelect">圖片比例</label>
     <select id="ratioSelect">
-      <option value="1:1">1 : 1（正方形）</option>
-      <option value="4:5">4 : 5 直式（IG 常用）</option>
-      <option value="3:4">3 : 4 直式</option>
-      <option value="16:9">16 : 9 橫式</option>
-      <option value="9:16">9 : 16 直式（Reels / Shorts）</option>
-    </select>
+      <option value="21:9">超寬（21:9）</option>
+      <option value="16:9">寬螢幕（16:9）</option>
+      <option value="5:4">經典（5:4）</option>
+      <option value="4:3">橫向（4:3）</option>
+      <option value="3:2">寬（3:2）</option>
+      <option value="1:1">方形（1:1）</option>
+      <option value="4:5">標準（4:5）</option>
+      <option value="3:4">縱向（3:4）</option>
+      <option value="2:3">高（2:3）</option>
+      <option value="9:16">垂直（9:16）</option>
+</select>
   </div>
 
   <div class="field">
@@ -277,14 +331,24 @@ const arrangeMap = {
 
 // ================= 比例 =================
 const ratioMap = {
+  "21:9":
+    "Final image should be framed in a 21:9 ultra-wide aspect ratio (cinematic, wide screen).",
+  "16:9":
+    "Final image should be framed in a 16:9 horizontal aspect ratio (wide screen).",
+  "5:4":
+    "Final image should be framed in a 5:4 aspect ratio (classic, slightly wide).",
+  "4:3":
+    "Final image should be framed in a 4:3 horizontal aspect ratio.",
+  "3:2":
+    "Final image should be framed in a 3:2 aspect ratio (wide photo format).",
   "1:1":
     "Final image should be framed in a 1:1 square aspect ratio.",
   "4:5":
     "Final image should be framed in a 4:5 vertical aspect ratio (ideal for social media posts).",
   "3:4":
     "Final image should be framed in a 3:4 vertical aspect ratio.",
-  "16:9":
-    "Final image should be framed in a 16:9 horizontal aspect ratio.",
+  "2:3":
+    "Final image should be framed in a 2:3 vertical aspect ratio.",
   "9:16":
     "Final image should be framed in a 9:16 vertical aspect ratio (ideal for Reels or Shorts)."
 };
@@ -335,6 +399,60 @@ const tableMap = {
     "The product rests on a dark stone surface with a dense, premium appearance and controlled highlights."
 };
 
+// ================= 加元素（Gift Box / Accessories / Decor） =================
+// 用於「禮盒展示檯」「精品展示」等情境，讓模型知道哪些元素可以出現、而且放在哪裡
+const giftboxMap = {
+  none: "",
+  premium_closed:
+    "Include a premium gift box in the scene. The gift box must be closed (not opened), clean, and unbranded, with a high-end finish and crisp edges.",
+  simple_closed:
+    "Include a simple paper box in the scene. The box must be closed (not opened), clean, and unbranded, with a minimal, tidy appearance.",
+  sleeve_packaging:
+    "Include a closed paper sleeve packaging in the scene, clean and unbranded, presented neatly behind or beside the product.",
+  carry_bag:
+    "Include a clean carry bag packaging in the scene (unbranded), placed neatly as a supporting element without distracting from the product."
+};
+
+const accessoryMap = {
+  none: "",
+  minimal:
+    "Add 1–2 minimal accessories that make sense for the product, kept subtle and clean. They must not compete with the product.",
+  set:
+    "Add a neat set of 2–4 matching accessories arranged in an orderly way, aligned and consistent in style.",
+  functional:
+    "Add functional accessories relevant to the product (e.g., lids, straws, measuring cup), all clean and presented like a product set photo.",
+  lifestyle:
+    "Add ultra-minimal lifestyle accessories (e.g., coaster, simple cutlery) to suggest use, but keep them understated."
+};
+
+const decorMap = {
+  none: "",
+  ribbon_fabric:
+    "Add a minimal ribbon or fabric accent with a premium texture, placed as a subtle decorative element.",
+  tissue_paper:
+    "Add thin wrapping paper or tissue paper with soft folds as a subtle background accent, not messy.",
+  dried_botanical:
+    "Add a very small amount of dried botanicals as a background accent, softly blurred and not dominant.",
+  metal_tray:
+    "Place the supporting elements on a clean metal tray with controlled reflections; keep the tray secondary to the product.",
+  ceramic_plate:
+    "Add a simple matte ceramic plate as a supporting prop; keep it clean and minimal."
+};
+
+const placementMap = {
+  behind:
+    "All added elements must be positioned behind the product, staying clearly secondary and not blocking any important product details.",
+  around:
+    "All added elements must be placed around the product in a balanced way, keeping the product clearly unobstructed and dominant.",
+  side:
+    "All added elements must be placed to one side of the product to support a modern negative-space composition, without blocking the product.",
+  foreground:
+    "All added elements may appear in the foreground but must be small, low-profile, and must not block the product at all.",
+  stacked:
+    "All added elements should be stacked or layered behind the product to create depth, while keeping the product unobstructed and the hero."
+};
+
+
 
 const materialLock =
   "Preserve the exact product from the reference photo: keep its shape, proportions, colors, patterns, and surface details identical. Do not change the design, only refine how it is lit and rendered.";
@@ -348,6 +466,10 @@ function generatePrompt() {
   const materialKey = document.getElementById("materialSelect").value;
   const pedestalKey = document.getElementById("pedestalSelect").value;
   const tableKey = document.getElementById("tableSelect").value;
+  const giftboxKey = document.getElementById("giftboxSelect").value;
+  const accessoryKey = document.getElementById("accessorySelect").value;
+  const decorKey = document.getElementById("decorSelect").value;
+  const placementKey = document.getElementById("placementSelect").value;
 
   const scene = sceneMap[sceneKey];
   const look = lookMap[lookKey];
@@ -357,6 +479,10 @@ function generatePrompt() {
   const materialText = materialMap[materialKey];
   const pedestalText = pedestalMap[pedestalKey];
   const tableText = tableMap[tableKey];
+  const giftboxText = giftboxMap[giftboxKey];
+  const accessoryText = accessoryMap[accessoryKey];
+  const decorText = decorMap[decorKey];
+  const placementText = placementMap[placementKey];
 
   const prompt =
 `Professional commercial product photography of the same item shown in the reference photo.
@@ -368,6 +494,12 @@ ${look.lighting}
 ${look.mood}
 ${angle}
 ${arrange}
+
+${giftboxText}
+${accessoryText}
+${decorText}
+${placementText}
+
 ${ratio}
 
 ${materialLock}
