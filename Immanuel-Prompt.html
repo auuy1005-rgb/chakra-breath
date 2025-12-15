@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>沐恩商品攝影 Prompt 小工具</title>
+  <style>
+    body {
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
+      max-width: 820px;
+      margin: 24px auto;
+      padding: 0 16px;
+      line-height: 1.6;
+    }
+    h1 { text-align: center; margin-bottom: 8px; }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+    .field { flex: 1 1 200px; display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 13px; font-weight: 600; }
+    select, textarea {
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 260px;
+      font-family: "SF Mono","Menlo","Consolas",monospace;
+      white-space: pre-wrap;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #fff;
+    }
+    button.primary { background: #111; color: #fff; }
+    .actions { display: flex; gap: 10px; align-items: center; margin: 8px 0 14px; }
+    small { font-size: 11px; color: #666; }
+  </style>
+</head>
+<body>
+
+<h1>沐恩商品攝影 Prompt 產生器 🥤</h1>
+
+<!-- 場景 + 風格 -->
+<div class="row">
+  <div class="field">
+    <label for="sceneSelect">場景 Scene（產品放在哪裡）</label>
+    <select id="sceneSelect">
+      <option value="white_studio">白底無影棚・Seamless White Studio</option>
+      <option value="bathroom">浴室洗手台・Bathroom Counter</option>
+      <option value="kitchen">廚房檯面・Kitchen Countertop</option>
+      <option value="dining">餐桌用餐情境・Dining Table</option>
+      <option value="living_coffee">客廳茶几・Living Room Coffee Table</option>
+      <option value="bar">吧台・Bar Counter</option>
+      <option value="outdoor_picnic">戶外野餐桌・Outdoor Picnic Table</option>
+      <option value="gift_display">禮盒展示檯・Gift Display</option>
+      <option value="marble_premium">大理石高質感檯面・Marble Counter</option>
+      <option value="acrylic_pedestal">透明壓克力展示台・Acrylic Pedestal</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="lookSelect">風格 Style（光線 / 氣氛）</label>
+    <select id="lookSelect">
+      <option value="high_key">High-Key 高光乾淨</option>
+      <option value="soft_daylight">Soft Daylight 柔和自然光</option>
+      <option value="warm_ambient">Warm Ambient 暖居家氛圍</option>
+      <option value="moody_bar">Moody Bar 黑金吧台感</option>
+      <option value="premium_lux">Premium Lux 精品高級感</option>
+      <option value="refraction_clarity">Refraction Clarity 超乾淨折射</option>
+      <option value="minimal_shadow">Minimal Shadow 幾乎無影</option>
+      <option value="morning_sun">Morning Sunlight 早晨斜射光</option>
+    </select>
+  </div>
+</div>
+
+<!-- 視角 + 構圖 + 比例 + 材質 -->
+<div class="row">
+  <div class="field">
+    <label for="angleSelect">視角（鏡頭高度）</label>
+    <select id="angleSelect">
+      <option value="low">低角度 15–20°（拉高氣勢）</option>
+      <option value="eye">眼平視角（自然）</option>
+      <option value="top">微俯視 25–35°（看得到上面）</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="arrangeSelect">擺放方式／構圖</label>
+    <select id="arrangeSelect">
+      <option value="center_single">單一主角置中</option>
+      <option value="center_with_side">主角置中，配角在一側</option>
+      <option value="diagonal">產品沿對角線排開</option>
+      <option value="side_group">產品群組靠一側，留大面積留白</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="ratioSelect">圖片比例</label>
+    <select id="ratioSelect">
+      <option value="1:1">1 : 1（正方形）</option>
+      <option value="4:5">4 : 5 直式（IG 常用）</option>
+      <option value="3:4">3 : 4 直式</option>
+      <option value="16:9">16 : 9 橫式</option>
+      <option value="9:16">9 : 16 直式（Reels / Shorts）</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="materialSelect">材質類型（感覺）</label>
+    <select id="materialSelect">
+      <option value="glass">透明玻璃感</option>
+      <option value="thick_plastic">厚件透明塑膠感（壺、厚杯）</option>
+      <option value="frosted_plastic">霧面半透明塑膠感</option>
+    </select>
+    <small>形狀與紋路交給參考圖片，這裡只鎖「材質表現」。</small>
+  </div>
+
+  <div class="field">
+    <label for="pedestalSelect">展示台材質（承載物）</label>
+    <select id="pedestalSelect">
+      <option value="none">不特別指定（跟隨場景）</option>
+      <option value="acrylic_clear">透明壓克力展示台</option>
+      <option value="acrylic_frosted">霧面壓克力展示台</option>
+      <option value="stone_block">實心石材方台</option>
+      <option value="brushed_metal">霧面拉絲金屬台</option>
+      <option value="painted_wood">霧面塗裝木質展示台</option>
+    </select>
+    <small>用來鎖「展示台長怎樣」，避免模型亂加奇怪底座。</small>
+  </div>
+
+  <div class="field">
+    <label for="tableSelect">桌面／檯面材質</label>
+    <select id="tableSelect">
+      <option value="auto">依場景自動</option>
+      <option value="solid_wood">實木桌面</option>
+      <option value="walnut_wood">深色胡桃木</option>
+      <option value="light_oak">淺色橡木</option>
+      <option value="matte_marble">霧面大理石</option>
+      <option value="polished_marble">拋光大理石</option>
+      <option value="concrete">清水模混凝土</option>
+      <option value="dark_stone">深色石材</option>
+    </select>
+    <small>只鎖桌面質感；若你選白底棚拍，建議用「依場景自動」。</small>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="primary" onclick="generatePrompt()">產生指令</button>
+  <button onclick="copyPrompt()">複製</button>
+  <small id="copyStatus"></small>
+</div>
+
+<label for="output">指令複製區（搭配參考圖片使用）</label>
+<textarea id="output" spellcheck="false"></textarea>
+
+<script>
+// ================= 場景（Scene） =================
+const sceneMap = {
+  white_studio: {
+    scene:
+      "Shot in a clean seamless white studio, with no visible horizon line or background elements, only a pure white surface and backdrop."
+  },
+  bathroom: {
+    scene:
+      "Shot in a modern bathroom environment, on a clean countertop near a ceramic sink and chrome faucet, with light tiles softly blurred in the background."
+  },
+  kitchen: {
+    scene:
+      "Shot on a kitchen countertop or wooden board, with a simple tiled or neutral wall in the background and minimal lifestyle props."
+  },
+  dining: {
+    scene:
+      "Shot on a dining table with simple plates, cutlery, and subtle tableware elements suggesting a meal or gathering."
+  },
+  living_coffee: {
+    scene:
+      "Shot on a living room coffee table, with a sofa or soft-focus living space elements in the background to suggest a cozy home environment."
+  },
+  bar: {
+    scene:
+      "Shot on a bar counter or dark wooden surface, with blurred bottles and warm bokeh lights in the background."
+  },
+  outdoor_picnic: {
+    scene:
+      "Shot outdoors on a picnic cloth or wooden table, with soft-focus greenery or park elements in the background."
+  },
+  gift_display: {
+    scene:
+      "Shot as a premium gift display, with the product arranged together with its gift box or simple decorative elements like ribbon or fabric."
+  },
+  marble_premium: {
+    scene:
+      "Shot on a polished marble countertop, with a minimal and luxurious background that feels like a high-end showroom or kitchen island."
+  },
+  acrylic_pedestal: {
+    scene:
+      "Shot on a clear acrylic pedestal or riser, with a softly blurred neutral background, creating a modern, gallery-like presentation."
+  }
+};
+
+// ================= 風格（Lighting / Mood） =================
+const lookMap = {
+  high_key: {
+    lighting:
+      "Lighting is high-key: ultra-soft, even, and bright, with minimal shadows and a very airy, polished catalog look.",
+    mood:
+      "The overall mood is clean, fresh, and commercial, ideal for e-commerce or catalog use."
+  },
+  soft_daylight: {
+    lighting:
+      "Lighting is soft daylight, coming from a large window-like source, with gentle falloff and natural-looking shadows.",
+    mood:
+      "The overall mood is relaxed, approachable, and natural, as if seen in real everyday life."
+  },
+  warm_ambient: {
+    lighting:
+      "Lighting is warm ambient, with gentle golden tones and soft shadows that wrap around the product.",
+    mood:
+      "The overall mood is cozy, inviting, and home-like, perfect for lifestyle product presentation."
+  },
+  moody_bar: {
+    lighting:
+      "Lighting is moody and contrasty, with stronger highlights and deeper shadows, coming from the side or back.",
+    mood:
+      "The overall mood is dramatic and atmospheric, like a stylish bar or evening setting."
+  },
+  premium_lux: {
+    lighting:
+      "Lighting is controlled and precise, with carefully placed highlights and soft shadows to sculpt the product.",
+    mood:
+      "The overall mood is luxurious and premium, as if the product belongs in a high-end boutique or showroom."
+  },
+  refraction_clarity: {
+    lighting:
+      "Lighting is optimized for transparency and refraction, producing clear edge highlights, visible caustics, and crisp internal detail.",
+    mood:
+      "The overall mood is hyper-clean and high-end, emphasizing the clarity and quality of the material."
+  },
+  minimal_shadow: {
+    lighting:
+      "Lighting is extremely soft and frontal, greatly minimizing shadows and evening out the entire surface of the product.",
+    mood:
+      "The overall mood is neutral and clinical, ideal for clean catalog or specification imagery."
+  },
+  morning_sun: {
+    lighting:
+      "Lighting mimics morning sunlight, entering from a low angle with a warm, gentle glow and elongated, soft-edged shadows.",
+    mood:
+      "The overall mood is fresh, optimistic, and slightly nostalgic, like early daylight entering a quiet room."
+  }
+};
+
+// ================= 視角 =================
+const angleMap = {
+  low:
+    "Camera is placed at a low angle (about 15–20 degrees above the table) to emphasize the height and side profile of the product.",
+  eye:
+    "Camera is placed at eye level with the product, creating a natural, straightforward commercial view.",
+  top:
+    "Camera is placed at a slight top-down angle (about 25–35 degrees above the product), revealing some of the top surface while keeping the side walls visible."
+};
+
+// ================= 構圖 =================
+const arrangeMap = {
+  center_single:
+    "Composition: a single main subject is centered in the frame with plenty of clean space around it.",
+  center_with_side:
+    "Composition: the main product is centered, with any supporting items arranged on one side as subtle accents that do not steal attention.",
+  diagonal:
+    "Composition: the products are arranged along a diagonal line from front to back, creating depth and a dynamic layout.",
+  side_group:
+    "Composition: the product group is placed closer to one side of the frame, leaving a large area of negative space on the opposite side for a modern, minimalist look."
+};
+
+// ================= 比例 =================
+const ratioMap = {
+  "1:1":
+    "Final image should be framed in a 1:1 square aspect ratio.",
+  "4:5":
+    "Final image should be framed in a 4:5 vertical aspect ratio (ideal for social media posts).",
+  "3:4":
+    "Final image should be framed in a 3:4 vertical aspect ratio.",
+  "16:9":
+    "Final image should be framed in a 16:9 horizontal aspect ratio.",
+  "9:16":
+    "Final image should be framed in a 9:16 vertical aspect ratio (ideal for Reels or Shorts)."
+};
+
+// ================= 材質 =================
+const materialMap = {
+  glass:
+    "Material treatment: Emphasize clean, crisp glass transparency with realistic refraction, thin-edge highlights, and subtle caustics on nearby surfaces. Avoid foggy or milky effects.",
+  thick_plastic:
+    "Material treatment: Emphasize the heavier density and thicker edges of molded transparent plastic. Maintain semi-gloss reflections and realistic internal distortions caused by material thickness.",
+  frosted_plastic:
+    "Material treatment: Maintain a soft diffused surface glow with gentle translucency, as seen in frosted plastic. Avoid making the material fully transparent or overly glossy."
+};
+
+// ================= 展示台（Pedestal） =================
+// 讓模型「承載物」更聽話，少亂長東西
+const pedestalMap = {
+  none: "",
+  acrylic_clear:
+    "The product is placed on a clear acrylic pedestal with sharp edges and clean transparency, showing subtle edge highlights and soft internal reflections.",
+  acrylic_frosted:
+    "The product is placed on a frosted acrylic pedestal with soft light diffusion and muted reflections, avoiding strong glare.",
+  stone_block:
+    "The product is placed on a solid stone pedestal with a matte surface, adding weight and a gallery-like presence.",
+  brushed_metal:
+    "The product is placed on a brushed metal pedestal with fine horizontal grain and controlled, subdued reflections.",
+  painted_wood:
+    "The product is placed on a painted wooden pedestal with a smooth matte finish and minimal visible texture."
+};
+
+// ================= 桌面／檯面（Tabletop） =================
+// 適用於餐桌、吧台、生活情境；白棚拍可用 auto
+const tableMap = {
+  auto: "",
+  solid_wood:
+    "The product rests on a solid wood tabletop with natural grain, finished in a soft matte sheen.",
+  walnut_wood:
+    "The product rests on a dark walnut wood surface with rich grain and a warm, premium tone.",
+  light_oak:
+    "The product rests on a light oak tabletop with subtle grain and a bright, airy feel.",
+  matte_marble:
+    "The product rests on a matte marble surface with soft veining and minimal reflections.",
+  polished_marble:
+    "The product rests on a polished marble surface with crisp reflections and elegant veining.",
+  concrete:
+    "The product rests on a smooth concrete surface with a modern, industrial character.",
+  dark_stone:
+    "The product rests on a dark stone surface with a dense, premium appearance and controlled highlights."
+};
+
+
+const materialLock =
+  "Preserve the exact product from the reference photo: keep its shape, proportions, colors, patterns, and surface details identical. Do not change the design, only refine how it is lit and rendered.";
+
+function generatePrompt() {
+  const sceneKey = document.getElementById("sceneSelect").value;
+  const lookKey = document.getElementById("lookSelect").value;
+  const angleKey = document.getElementById("angleSelect").value;
+  const arrangeKey = document.getElementById("arrangeSelect").value;
+  const ratioKey = document.getElementById("ratioSelect").value;
+  const materialKey = document.getElementById("materialSelect").value;
+  const pedestalKey = document.getElementById("pedestalSelect").value;
+  const tableKey = document.getElementById("tableSelect").value;
+
+  const scene = sceneMap[sceneKey];
+  const look = lookMap[lookKey];
+  const angle = angleMap[angleKey];
+  const arrange = arrangeMap[arrangeKey];
+  const ratio = ratioMap[ratioKey];
+  const materialText = materialMap[materialKey];
+  const pedestalText = pedestalMap[pedestalKey];
+  const tableText = tableMap[tableKey];
+
+  const prompt =
+`Professional commercial product photography of the same item shown in the reference photo.
+
+${scene.scene}
+${pedestalText}
+${tableText}
+${look.lighting}
+${look.mood}
+${angle}
+${arrange}
+${ratio}
+
+${materialLock}
+${materialText}
+
+Enhance clarity, reflections, and fine detail while keeping the product identical to the reference image. Background and props must stay consistent with the chosen scene, and the product must remain the clear hero of the frame.`;
+
+  document.getElementById("output").value = prompt;
+  document.getElementById("copyStatus").textContent = "";
+}
+
+function copyPrompt() {
+  const ta = document.getElementById("output");
+  ta.select();
+  ta.setSelectionRange(0, 99999);
+  const ok = document.execCommand("copy");
+  document.getElementById("copyStatus").textContent =
+    ok ? "✅ 已複製到剪貼簿" : "⚠️ 請手動複製";
+}
+</script>
+
+</body>
+</html>
