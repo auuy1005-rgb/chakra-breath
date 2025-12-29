@@ -48,30 +48,90 @@
   <div class="field">
     <label for="sceneSelect">場景 Scene（產品放在哪裡）</label>
     <select id="sceneSelect">
+            
+      <option value="none">無（不指定場景）</option>
       <option value="white_studio">白底無影棚・Seamless White Studio</option>
-      <option value="bathroom">浴室洗手台・Bathroom Counter</option>
-      <option value="kitchen">廚房檯面・Kitchen Countertop</option>
-      <option value="dining">餐桌用餐情境・Dining Table</option>
-      <option value="living_coffee">客廳茶几・Living Room Coffee Table</option>
-      <option value="bar">吧台・Bar Counter</option>
-      <option value="outdoor_picnic">戶外野餐桌・Outdoor Picnic Table</option>
+      <option value="showroom">展示間／精品陳列・Showroom Display</option>
+      <option value="kitchen_island">廚房中島檯面・Kitchen Island Counter</option>
+      <option value="dining_table">餐桌用餐情境・Dining Table Setting</option>
+      <option value="bar_cart">居家吧台推車・Home Bar Cart</option>
+      <option value="cocktail_counter">調酒檯／夜間吧台・Cocktail Counter</option>
+      <option value="bathroom_vanity">浴室洗手台／梳妝檯・Bathroom Vanity</option>
+      <option value="spa_towel">衛浴 SPA 毛巾情境・Spa Towel Scene</option>
+      <option value="organizer_shelf">收納層架／展示牆・Organizer Shelf</option>
+      <option value="desk_workspace">書桌工作區／文具收納・Desk Workspace</option>
+      <option value="entry_console">玄關檯／家居佈置・Entry Console Table</option>
+      <option value="outdoor_patio">戶外露台／派對桌・Outdoor Patio Table</option>
+      <option value="trade_show_booth">展場攤位／商務展示・Trade Show Booth</option>
       <option value="gift_display">禮盒展示檯・Gift Display</option>
+      <option value="acrylic_pedestal_scene">壓克力展示台情境・Acrylic Pedestal Scene</option>
       <option value="marble_premium">大理石高質感檯面・Marble Counter</option>
-      <option value="acrylic_pedestal">透明壓克力展示台・Acrylic Pedestal</option>
+
     </select>
   </div>
 
   <div class="field">
     <label for="lookSelect">風格 Style（光線 / 氣氛）</label>
     <select id="lookSelect">
+            
+      <option value="none">無（不指定風格）</option>
+      <option value="catalog_clean">目錄棚拍・Catalog Clean</option>
       <option value="high_key">High-Key 高光乾淨</option>
       <option value="soft_daylight">Soft Daylight 柔和自然光</option>
-      <option value="warm_ambient">Warm Ambient 暖居家氛圍</option>
-      <option value="moody_bar">Moody Bar 黑金吧台感</option>
+      <option value="warm_home">Warm Home 暖居家氛圍</option>
+      <option value="cool_neutral">Cool Neutral 冷中性質感</option>
       <option value="premium_lux">Premium Lux 精品高級感</option>
+      <option value="moody_bar">Moody Bar 黑金吧台感</option>
       <option value="refraction_clarity">Refraction Clarity 超乾淨折射</option>
       <option value="minimal_shadow">Minimal Shadow 幾乎無影</option>
-      <option value="morning_sun">Morning Sunlight 早晨斜射光</option>
+      <option value="editorial_contrast">Editorial Contrast 編輯高對比</option>
+      <option value="scandi_minimal">Scandi Minimal 北歐極簡</option>
+      <option value="boutique_gallery">Boutique Gallery 展示間精品感</option>
+
+    </select>
+  </div>
+</div>
+
+<!-- 產品線 + 歐美節慶活動 -->
+<div class="row">
+<div class="field">
+    <label for="eventSelect">歐美節慶／活動</label>
+    <select id="eventSelect">
+      <option value="none">無（不指定活動）</option>
+      <option value="christmas">Christmas 聖誕節</option>
+      <option value="new_year">New Year 跨年／新年</option>
+      <option value="thanksgiving">Thanksgiving 感恩節</option>
+      <option value="halloween">Halloween 萬聖節</option>
+      <option value="valentines">Valentine's Day 情人節</option>
+      <option value="easter">Easter 復活節</option>
+      <option value="mothers_day">Mother's Day 母親節</option>
+      <option value="fathers_day">Father's Day 父親節</option>
+      <option value="summer_bbq">Summer BBQ 夏日烤肉派對</option>
+      <option value="housewarming">Housewarming 喬遷派對</option>
+      <option value="wedding">Wedding 婚禮／喜宴</option>
+    </select>
+    <small>只加「氛圍元素」，不要把產品變成節慶造型。</small>
+  </div>
+  <div class="field">
+    <label for="eventIntensitySelect">節慶濃度</label>
+    <select id="eventIntensitySelect">
+      <option value="none">無（不指定濃度）</option>
+      <option value="subtle">淡（幾乎看不出來）</option>
+      <option value="normal">普通（看得到但不搶戲）</option>
+      <option value="strong">強烈（明顯但仍不遮擋產品）</option>
+    </select>
+    <small>建議：要「更穩不亂變形」先用「淡」或「普通」。</small>
+  </div>
+
+
+  <div class="field">
+    <label for="seasonSelect">季節氛圍（輕量）</label>
+    <select id="seasonSelect">
+      <option value="none">無（不指定季節）</option>
+      <option value="spring">春（日光清爽）</option>
+      <option value="summer">夏（明亮、清透）</option>
+      <option value="autumn">秋（溫暖、木質）</option>
+      <option value="winter">冬（冷淨、偏高級）</option>
     </select>
   </div>
 </div>
@@ -101,15 +161,27 @@
   </div>
 
   <div class="field">
-    <label for="decorSelect">相關裝飾（質感點綴）</label>
-    <select id="decorSelect">
-      <option value="none">不加裝飾</option>
-      <option value="ribbon_fabric">緞帶 / 布料（極簡，質感）</option>
-      <option value="tissue_paper">薄紙 / 包裝紙（柔和折痕）</option>
+    <label for="propsSelect">道具／裝飾（依產品用途 & 質感點綴）</label>
+    <select id="propsSelect">
+      <option value="none">無（不加道具／裝飾）</option>
+
+      <!-- 依產品用途：情境道具組 -->
+      <option value="bathroom_essentials">衛浴基本道具（毛巾／皂／瓶罐）</option>
+      <option value="dining_set">餐桌道具（盤／餐巾／刀叉）</option>
+      <option value="bar_cocktail">吧台道具（酒瓶／冰塊／夾子）</option>
+      <option value="organizer_vanity">梳妝收納道具（刷具／化妝品）</option>
+      <option value="desk_stationery">桌面收納道具（筆／記事本）</option>
+      <option value="home_decor_minimal">家居佈置道具（書／花器）</option>
+      <option value="gift_wrap_minimal">禮物包裝道具（緞帶／薄紙）</option>
+
+      <!-- 質感點綴：單一元素（更輕量） -->
+      <option value="ribbon_fabric">緞帶／布料（極簡，質感）</option>
+      <option value="tissue_paper">薄紙／包裝紙（柔和折痕）</option>
       <option value="dried_botanical">乾燥植物（少量、模糊背景）</option>
       <option value="metal_tray">金屬托盤（乾淨、反光受控）</option>
       <option value="ceramic_plate">陶瓷盤（霧面、簡約）</option>
     </select>
+    <small>道具要「服務產品」，不搶戲；避免遮擋產品與參考圖細節。</small>
   </div>
 
   <div class="field">
@@ -130,7 +202,8 @@
   <div class="field">
     <label for="angleSelect">視角（鏡頭高度）</label>
     <select id="angleSelect">
-      <option value="low">低角度 15–20°（拉高氣勢）</option>
+            <option value="none">無（不指定視角）</option>
+<option value="low">低角度 15–20°（拉高氣勢）</option>
       <option value="eye">眼平視角（自然）</option>
       <option value="top">微俯視 25–35°（看得到上面）</option>
     </select>
@@ -139,7 +212,8 @@
   <div class="field">
     <label for="arrangeSelect">擺放方式／構圖</label>
     <select id="arrangeSelect">
-      <option value="center_single">單一主角置中</option>
+            <option value="none">無（不指定構圖）</option>
+<option value="center_single">單一主角置中</option>
       <option value="center_with_side">主角置中，配角在一側</option>
       <option value="diagonal">產品沿對角線排開</option>
       <option value="side_group">產品群組靠一側，留大面積留白</option>
@@ -149,7 +223,8 @@
   <div class="field">
     <label for="ratioSelect">圖片比例</label>
     <select id="ratioSelect">
-      <option value="21:9">超寬（21:9）</option>
+            <option value="none">無（不指定比例）</option>
+<option value="21:9">超寬（21:9）</option>
       <option value="16:9">寬螢幕（16:9）</option>
       <option value="5:4">經典（5:4）</option>
       <option value="4:3">橫向（4:3）</option>
@@ -165,7 +240,8 @@
   <div class="field">
     <label for="materialSelect">材質類型（感覺）</label>
     <select id="materialSelect">
-      <option value="glass">透明玻璃感</option>
+            <option value="none">無（不指定材質）</option>
+<option value="glass">透明玻璃感</option>
       <option value="thick_plastic">厚件透明塑膠感（壺、厚杯）</option>
       <option value="frosted_plastic">霧面半透明塑膠感</option>
     </select>
@@ -188,7 +264,8 @@
 <div class="field">
   <label for="tableSelect">桌面／檯面材質</label>
   <select id="tableSelect">
-    <option value="auto">依場景自動</option>
+          <option value="none">無（不指定桌面）</option>
+<option value="auto">依場景自動</option>
 
     <!-- 木質 -->
     <option value="solid_wood">實木桌面（自然木紋）</option>
@@ -242,98 +319,230 @@
 <script>
 // ================= 場景（Scene） =================
 const sceneMap = {
+  none: { scene: "" },
+
   white_studio: {
     scene:
       "Shot in a clean seamless white studio, with no visible horizon line or background elements, only a pure white surface and backdrop."
   },
-  bathroom: {
+
+  showroom: {
     scene:
-      "Shot in a modern bathroom environment, on a clean countertop near a ceramic sink and chrome faucet, with light tiles softly blurred in the background."
+      "Shot in a modern showroom-like display environment with a neutral background, clean surfaces, and a gallery presentation feel."
   },
-  kitchen: {
+
+  kitchen_island: {
     scene:
-      "Shot on a kitchen countertop or wooden board, with a simple tiled or neutral wall in the background and minimal lifestyle props."
+      "Shot on a modern kitchen island countertop with a minimal backsplash or neutral wall softly blurred in the background."
   },
-  dining: {
+
+  dining_table: {
     scene:
-      "Shot on a dining table with simple plates, cutlery, and subtle tableware elements suggesting a meal or gathering."
+      "Shot on a dining table setting with minimal tableware accents, clean arrangement, and a lifestyle e-commerce feel."
   },
-  living_coffee: {
+
+  bar_cart: {
     scene:
-      "Shot on a living room coffee table, with a sofa or soft-focus living space elements in the background to suggest a cozy home environment."
+      "Shot on a home bar cart or bar trolley scene with a neat, premium layout and softly blurred background elements."
   },
-  bar: {
+
+  cocktail_counter: {
     scene:
-      "Shot on a bar counter or dark wooden surface, with blurred bottles and warm bokeh lights in the background."
+      "Shot on a cocktail counter with controlled, moody background bokeh and a premium bar atmosphere, without clutter."
   },
-  outdoor_picnic: {
+
+  bathroom_vanity: {
     scene:
-      "Shot outdoors on a picnic cloth or wooden table, with soft-focus greenery or park elements in the background."
+      "Shot in a modern bathroom vanity environment, on a clean countertop near a ceramic sink and chrome faucet, with light tiles softly blurred in the background."
   },
+
+  spa_towel: {
+    scene:
+      "Shot in a spa-like bathroom scene with clean folded towels and a calm, hygienic atmosphere, keeping the set minimal."
+  },
+
+  organizer_shelf: {
+    scene:
+      "Shot on an organized shelf or storage display with neat spacing and clean, functional styling, like an e-commerce organizer photo."
+  },
+
+  desk_workspace: {
+    scene:
+      "Shot on a tidy desk workspace with minimal stationery context, emphasizing organization and everyday use."
+  },
+
+  entry_console: {
+    scene:
+      "Shot on an entry console table with minimal home decor context, modern and tidy, like a lifestyle interior photo."
+  },
+
+  outdoor_patio: {
+    scene:
+      "Shot on an outdoor patio table with soft-focus greenery in the background, bright and airy, minimal props."
+  },
+
+  trade_show_booth: {
+    scene:
+      "Shot like a B2B trade show product display: clean, neutral, specification-friendly, with a professional presentation style."
+  },
+
   gift_display: {
     scene:
       "Shot as a premium gift display, with the product arranged together with its gift box or simple decorative elements like ribbon or fabric."
   },
+
+  acrylic_pedestal_scene: {
+    scene:
+      "Shot on a clear acrylic pedestal or riser, with a softly blurred neutral background, creating a modern, gallery-like presentation."
+  },
+
   marble_premium: {
     scene:
       "Shot on a polished marble countertop, with a minimal and luxurious background that feels like a high-end showroom or kitchen island."
-  },
-  acrylic_pedestal: {
-    scene:
-      "Shot on a clear acrylic pedestal or riser, with a softly blurred neutral background, creating a modern, gallery-like presentation."
   }
 };
 
 // ================= 風格（Lighting / Mood） =================
 const lookMap = {
+  none: { lighting: "", mood: "" },
+
+  catalog_clean: {
+    lighting:
+      "Lighting is clean and balanced like a catalog shoot: soft, even, and controlled, with natural-looking highlights and tidy shadows.",
+    mood:
+      "The overall mood is straightforward, specification-friendly, and e-commerce ready."
+  },
+
   high_key: {
     lighting:
       "Lighting is high-key: ultra-soft, even, and bright, with minimal shadows and a very airy, polished catalog look.",
     mood:
       "The overall mood is clean, fresh, and commercial, ideal for e-commerce or catalog use."
   },
+
   soft_daylight: {
     lighting:
       "Lighting is soft daylight, coming from a large window-like source, with gentle falloff and natural-looking shadows.",
     mood:
       "The overall mood is relaxed, approachable, and natural, as if seen in real everyday life."
   },
-  warm_ambient: {
+
+  warm_home: {
     lighting:
-      "Lighting is warm ambient, with gentle golden tones and soft shadows that wrap around the product.",
+      "Lighting is warm and home-like, with gentle golden tones and soft shadows that wrap around the product.",
     mood:
-      "The overall mood is cozy, inviting, and home-like, perfect for lifestyle product presentation."
+      "The overall mood is cozy, inviting, and lifestyle-oriented, without looking cluttered."
   },
-  moody_bar: {
+
+  cool_neutral: {
     lighting:
-      "Lighting is moody and contrasty, with stronger highlights and deeper shadows, coming from the side or back.",
+      "Lighting is cool-neutral and clean, with controlled reflections and a modern, minimal feel.",
     mood:
-      "The overall mood is dramatic and atmospheric, like a stylish bar or evening setting."
+      "The overall mood is crisp, contemporary, and premium-neutral."
   },
+
   premium_lux: {
     lighting:
       "Lighting is controlled and precise, with carefully placed highlights and soft shadows to sculpt the product.",
     mood:
       "The overall mood is luxurious and premium, as if the product belongs in a high-end boutique or showroom."
   },
+
+  moody_bar: {
+    lighting:
+      "Lighting is moody and contrasty, with stronger highlights and deeper shadows, coming from the side or back.",
+    mood:
+      "The overall mood is dramatic and atmospheric, like a stylish bar or evening setting."
+  },
+
   refraction_clarity: {
     lighting:
       "Lighting is optimized for transparency and refraction, producing clear edge highlights, visible caustics, and crisp internal detail.",
     mood:
       "The overall mood is hyper-clean and high-end, emphasizing the clarity and quality of the material."
   },
+
   minimal_shadow: {
     lighting:
       "Lighting is extremely soft and frontal, greatly minimizing shadows and evening out the entire surface of the product.",
     mood:
       "The overall mood is neutral and clinical, ideal for clean catalog or specification imagery."
   },
-  morning_sun: {
+
+  editorial_contrast: {
     lighting:
-      "Lighting mimics morning sunlight, entering from a low angle with a warm, gentle glow and elongated, soft-edged shadows.",
+      "Lighting is editorial with higher contrast: controlled highlights and deeper shadow gradients, still keeping details readable.",
     mood:
-      "The overall mood is fresh, optimistic, and slightly nostalgic, like early daylight entering a quiet room."
+      "The overall mood is modern and design-forward, suitable for premium editorial product photos."
+  },
+
+  scandi_minimal: {
+    lighting:
+      "Lighting is soft and clean with gentle daylight, minimal props, and airy tones typical of Scandinavian interiors.",
+    mood:
+      "The overall mood is minimal, calm, and lifestyle-focused, with restrained styling."
+  },
+
+  boutique_gallery: {
+    lighting:
+      "Lighting feels like a boutique gallery: precise highlights, subtle shadows, and a clean neutral background with a curated feel.",
+    mood:
+      "The overall mood is curated, premium, and showroom-like."
   }
+};
+
+
+// ================= 歐美節慶／活動（Event） =================
+const eventMap = {
+  none: "",
+  christmas:
+    "Event styling: subtle Christmas mood using neutral festive accents (no logos), keep it minimal and premium.",
+  new_year:
+    "Event styling: subtle New Year celebration mood with minimal sparkle accents, keep it clean and not cluttered.",
+  thanksgiving:
+    "Event styling: subtle Thanksgiving table mood with warm tones and understated seasonal accents, not overcrowded.",
+  halloween:
+    "Event styling: subtle Halloween mood using restrained dark accents, avoid cartoonish props.",
+  valentines:
+    "Event styling: subtle Valentine's mood using minimal romantic accents, keep it refined and not cheesy.",
+  easter:
+    "Event styling: subtle Easter brunch mood using light, clean spring accents, keep it minimal.",
+  mothers_day:
+    "Event styling: subtle Mother's Day brunch mood with gentle, premium lifestyle accents.",
+  fathers_day:
+    "Event styling: subtle Father's Day gathering mood, clean and understated.",
+  summer_bbq:
+    "Event styling: subtle summer BBQ or outdoor gathering mood, bright and airy, minimal props.",
+  housewarming:
+    "Event styling: subtle housewarming party mood, tidy modern home atmosphere, minimal accents.",
+  wedding:
+    "Event styling: subtle wedding or celebration mood with clean, premium accents, avoid heavy decoration."
+};
+
+
+// ================= 節慶濃度（Event Intensity） =================
+const eventIntensityMap = {
+  none: "",
+  subtle:
+    "Event intensity level: subtle. Keep the festive mood extremely minimal—one or two faint accents only, mostly neutral.",
+  normal:
+    "Event intensity level: normal. Clearly readable festive mood with a few tasteful accents, still leaving the product as the hero.",
+  strong:
+    "Event intensity level: strong. Strong festive mood with multiple coordinated accents, but do not cover, clutter, or distract from the product."
+};
+
+
+// ================= 季節（Season） =================
+const seasonMap = {
+  none: "",
+  spring:
+    "Seasonal mood: spring-like freshness with soft daylight and airy atmosphere.",
+  summer:
+    "Seasonal mood: bright, clear summer feel with crisp highlights and clean shadows.",
+  autumn:
+    "Seasonal mood: warm, cozy autumn tone with wood-friendly, slightly golden ambience.",
+  winter:
+    "Seasonal mood: cool, clean winter tone with premium, crisp lighting."
 };
 
 // ================= 視角 =================
@@ -360,6 +569,7 @@ const arrangeMap = {
 
 // ================= 比例 =================
 const ratioMap = {
+  "none": "",
   "21:9":
     "Final image should be framed in a 21:9 ultra-wide aspect ratio (cinematic, wide screen).",
   "16:9":
@@ -384,6 +594,7 @@ const ratioMap = {
 
 // ================= 材質 =================
 const materialMap = {
+  none: "",
   glass:
     "Material treatment: Emphasize clean, crisp glass transparency with realistic refraction, thin-edge highlights, and subtle caustics on nearby surfaces. Avoid foggy or milky effects.",
   thick_plastic:
@@ -411,6 +622,7 @@ const pedestalMap = {
 // ================= 桌面／檯面（Tabletop） =================
 // 鎖「接觸面質感」，不改產品、不加戲
 const tableMap = {
+  none: "",
   auto: "",
 
   // ===== 木質 =====
@@ -501,8 +713,27 @@ const accessoryMap = {
     "Add ultra-minimal lifestyle accessories (e.g., coaster, simple cutlery) to suggest use, but keep them understated."
 };
 
-const decorMap = {
+// ================= 道具／裝飾（Props / Decor merged） =================
+const propsMap = {
   none: "",
+
+  // 情境道具組（依產品用途）
+  bathroom_essentials:
+    "Prop set: minimal bathroom essentials (a clean folded towel, a simple soap, and one neutral bottle), all unbranded.",
+  dining_set:
+    "Prop set: minimal dining table essentials (a plain plate, simple cutlery, and a neutral napkin), arranged neatly.",
+  bar_cocktail:
+    "Prop set: minimal bar essentials (one bottle shape, a few ice cubes, and simple tongs), all unbranded and secondary.",
+  organizer_vanity:
+    "Prop set: minimal vanity organizer props (makeup brushes and a couple of cosmetic items), tidy and unbranded.",
+  desk_stationery:
+    "Prop set: minimal desk props (a notebook and 1–2 pens), clean and organized.",
+  home_decor_minimal:
+    "Prop set: minimal home decor accents (a closed book and a simple vase), subtle and not dominant.",
+  gift_wrap_minimal:
+    "Prop set: minimal gift-wrapping accents (neutral ribbon and tissue paper), premium and restrained.",
+
+  // 單一質感點綴（更輕量）
   ribbon_fabric:
     "Add a minimal ribbon or fabric accent with a premium texture, placed as a subtle decorative element.",
   tissue_paper:
@@ -514,6 +745,7 @@ const decorMap = {
   ceramic_plate:
     "Add a simple matte ceramic plate as a supporting prop; keep it clean and minimal."
 };
+
 
 const placementMap = {
   behind:
@@ -544,8 +776,11 @@ function generatePrompt() {
   const tableKey = document.getElementById("tableSelect").value;
   const giftboxKey = document.getElementById("giftboxSelect").value;
   const accessoryKey = document.getElementById("accessorySelect").value;
-  const decorKey = document.getElementById("decorSelect").value;
+  const propsKey = document.getElementById("propsSelect").value;
   const placementKey = document.getElementById("placementSelect").value;
+  const eventKey = document.getElementById("eventSelect").value;
+  const eventIntensityKey = document.getElementById("eventIntensitySelect").value;
+  const seasonKey = document.getElementById("seasonSelect").value;
 
   const scene = sceneMap[sceneKey];
   const look = lookMap[lookKey];
@@ -557,8 +792,11 @@ function generatePrompt() {
   const tableText = tableMap[tableKey];
   const giftboxText = giftboxMap[giftboxKey];
   const accessoryText = accessoryMap[accessoryKey];
-  const decorText = decorMap[decorKey];
+  const propsText = propsMap[propsKey];
   const placementText = placementMap[placementKey];
+  const eventText = eventMap[eventKey];
+  const eventIntensityText = eventIntensityMap[eventIntensityKey];
+  const seasonText = seasonMap[seasonKey];
 
   const prompt =
 `Professional commercial product photography of the same item shown in the reference photo.
@@ -566,6 +804,9 @@ function generatePrompt() {
 ${scene.scene}
 ${pedestalText}
 ${tableText}
+${eventText}
+${eventIntensityText}
+${seasonText}
 ${look.lighting}
 ${look.mood}
 ${angle}
@@ -573,7 +814,7 @@ ${arrange}
 
 ${giftboxText}
 ${accessoryText}
-${decorText}
+${propsText}
 ${placementText}
 
 ${ratio}
